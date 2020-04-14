@@ -11,8 +11,13 @@ if(session.getAttribute("login")!=null) //check login session user not access or
 try
 {
 	Class.forName("com.mysql.jdbc.Driver"); //load driver
+
+  String dbHostIp = config.getInitParameter("host-ip");  
+  String dbUser = config.getInitParameter("user");
+  String dbPassword = config.getInitParameter("password");
+	
 	Connection con=DriverManager
-		.getConnection("jdbc:mysql://HOST_IP:3306/dbuser", "USER", "PASSWORD"); //create connection
+    .getConnection("jdbc:mysql://" + dbHostIp + ":3306/dbuser", dbUser, dbPassword); //create connection
 	
 	if(request.getParameter("btn_login")!=null) //check login button click event not null
 	{
@@ -96,30 +101,30 @@ catch(Exception e)
                     <div class="form-title-row">
                         <h1>Login</h1>
                     </div>
-					<p style="color:red">				   		
-					<%
-					if(request.getAttribute("errorMsg")!=null)
-					{
-						out.println(request.getAttribute("errorMsg")); //error message for email or password 
-					}
-					%>
-					</p>
-				   </br>
+										<p style="color:red">				   		
+										<%
+										if(request.getAttribute("errorMsg")!=null)
+										{
+											out.println(request.getAttribute("errorMsg")); //error message for email or password 
+										}
+										%>
+										</p>
+										</br>
                     <div class="form-row">
-                        <label>
-                            <span>Email</span>
-                            <input type="text" name="txt_email" id="email" placeholder="enter email">
-                        </label>
+											<label>
+													<span>Email</span>
+													<input type="text" name="txt_email" id="email" placeholder="enter email">
+											</label>
                     </div>
                     <div class="form-row">
-                        <label>
-                            <span>Password</span>
-                            <input type="password" name="txt_password" id="password" placeholder="enter password">
-                        </label>
+											<label>
+													<span>Password</span>
+													<input type="password" name="txt_password" id="password" placeholder="enter password">
+											</label>
                     </div>
-					<input type="submit" name="btn_login" value="Login">
+									<input type="submit" name="btn_login" value="Login">
                 </div>
-				<a href="register.jsp" class="form-log-in-with-existing">You Don't have an account? <b> Register here </b></a>
+							<a href="register.jsp" class="form-log-in-with-existing">You Don't have an account? <b> Register here </b></a>
             </div>
         </form>
     </div>

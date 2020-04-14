@@ -11,7 +11,13 @@ if(session.getAttribute("login")!=null) //check login session user not access or
 try
 {
 	Class.forName("com.mysql.jdbc.Driver"); //load driver
-	Connection con=DriverManager.getConnection("jdbc:mysql://HOST_IP:3306/dbuser", "USER", "PASSWORD"); //create connection
+	
+	String dbHostIp = config.getInitParameter("host-ip");  
+  String dbUser = config.getInitParameter("user");
+  String dbPassword = config.getInitParameter("password");
+ 
+	Connection con=DriverManager
+    .getConnection("jdbc:mysql://" + dbHostIp + ":3306/dbuser", dbUser, dbPassword); //create connection
 	
 	if(request.getParameter("btn_register")!=null) //check register button click event not null
 	{
@@ -60,38 +66,38 @@ catch(Exception e)
 			var password_valid=/^[A-Z a-z 0-9 !@#$%&*()<>]{6,12}$/; //pattern password allowed A to Z, a to z, 0-9, !@#$%&*()<> charecter 
 			
 			var fname = document.getElementById("fname"); //textbox id fname
-            var lname = document.getElementById("lname"); //textbox id lname
-            var email = document.getElementById("email"); //textbox id email
-            var password = document.getElementById("password"); //textbox id password
+			var lname = document.getElementById("lname"); //textbox id lname
+			var email = document.getElementById("email"); //textbox id email
+			var password = document.getElementById("password"); //textbox id password
 			
 			if(!first_name.test(fname.value) || fname.value=='') 
-            {
+			{
 				alert("Enter firstname alphabet only!");
-                fname.focus();
-                fname.style.background = '#f08080';
-                return false;                    
-            }
+				fname.focus();
+				fname.style.background = '#f08080';
+				return false;                    
+			}
 			if(!last_name.test(lname.value) || lname.value=='') 
-            {
+			{
 				alert("Enter lastname alphabet only!");
-                lname.focus();
-                lname.style.background = '#f08080';
-                return false;                    
-            }
+				lname.focus();
+				lname.style.background = '#f08080';
+				return false;                    
+			}
 			if(!email_valid.test(email.value) || email.value=='') 
-            {
+			{
 				alert("Enter valid email!");
-                email.focus();
-                email.style.background = '#f08080';
-                return false;                    
-            }
+				email.focus();
+				email.style.background = '#f08080';
+				return false;                    
+			}
 			if(!password_valid.test(password.value) || password.value=='') 
-            {
+			{
 				alert("Password Must Be 6 to 12 and allowed !@#$%&*()<> character");
-                password.focus();
-                password.style.background = '#f08080';
-                return false;                    
-            }
+				password.focus();
+				password.style.background = '#f08080';
+				return false;                    
+			}
 		}
 	</script>	
 </head>
@@ -103,26 +109,26 @@ catch(Exception e)
                     <div class="form-title-row">
                         <h1>Register</h1>
                     </div>
-					<p style="color:green">				   		
-					<%
-					if(request.getAttribute("successMsg")!=null)
-					{
-						out.println(request.getAttribute("successMsg")); //register success message
-					}
-					%>
-					</p>
-				   </br>
+										<p style="color:green">				   		
+											<%
+											if(request.getAttribute("successMsg")!=null)
+											{
+												out.println(request.getAttribute("successMsg")); //register success message
+											}
+											%>
+										</p>
+										</br>
                     <div class="form-row">
                         <label>
                             <span>Firstname</span>
                             <input type="text" name="txt_firstname" id="fname" placeholder="enter firstname">
                         </label>
                     </div>
-					<div class="form-row">
-                        <label>
-                            <span>Lastname</span>
-                            <input type="text" name="txt_lastname" id="lname" placeholder="enter lastname">
-                        </label>
+										<div class="form-row">
+											<label>
+													<span>Lastname</span>
+													<input type="text" name="txt_lastname" id="lname" placeholder="enter lastname">
+											</label>
                     </div>
                     <div class="form-row">
                         <label>
@@ -136,7 +142,7 @@ catch(Exception e)
                             <input type="password" name="txt_password" id="password" placeholder="enter password">
                         </label>
                     </div>
-					<input type="submit" name="btn_register" value="Register">
+									<input type="submit" name="btn_register" value="Register">
                 </div>
                 <a href="index.jsp" class="form-log-in-with-existing">Already have an account? <b> Login here </b></a>
             </div>
