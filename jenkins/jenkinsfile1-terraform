@@ -30,12 +30,12 @@ pipeline {
         }
       }
     }
-    stage(Terraform init') {
+    stage('Terraform init') {
       steps {
         terraform init
       }
     }
-    stage(Terraform init') {
+    stage('Terraform init') {
       steps {
 
       }
