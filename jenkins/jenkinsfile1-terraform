@@ -2,19 +2,16 @@
 properties([disableConcurrentBuilds()])
 
 pipeline {
-  agent slave1
-
+  agent {
+    label 'ubuntu'
+  }
+  options {
+    timestamps()
+  }
   stages {
-    stage('Install terraform and az') {
+    stage('Check terraform') {
       steps {
-        apt-get update -y
-        apt-get upgrade -y
-        apt-get install unzip -y
-        wget https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip
-        unzip terraform_0.12.24_linux_amd64.zip
-        mv terraform /usr/local/bin/
         terraform --version
-        curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
       }
     }
     stage('Az login'){
