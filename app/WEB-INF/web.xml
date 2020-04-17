@@ -6,7 +6,12 @@
     
   <init-param>  
     <param-name>host-ip</param-name>  
-    <param-value>host-ip</param-value>  
+    <param-value>host-ip:1433</param-value>  
+  </init-param>
+
+  <init-param>  
+    <param-name>dbname</param-name>  
+    <param-value>dbname</param-value>  
   </init-param> 
 
   <init-param>  
@@ -18,8 +23,7 @@
     <param-name>password</param-name>  
     <param-value>password</param-value>  
   </init-param> 
-</servlet>
-
+</servlet> 
 
 <servlet>  
   <servlet-name>index</servlet-name>  
@@ -27,7 +31,12 @@
     
   <init-param>  
     <param-name>host-ip</param-name>  
-    <param-value>host-ip</param-value>  
+    <param-value>host-ip:1433</param-value>  
+  </init-param>
+
+  <init-param>  
+    <param-name>dbname</param-name>  
+    <param-value>dbname</param-value>  
   </init-param> 
 
   <init-param>  

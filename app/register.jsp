@@ -10,14 +10,18 @@ if(session.getAttribute("login")!=null) //check login session user not access or
 <%
 try
 {
-  Class.forName("com.mysql.jdbc.Driver"); //load driver
-  
-  String dbHostIp = config.getInitParameter("host-ip");  
-  String dbUser = config.getInitParameter("user");
-  String dbPassword = config.getInitParameter("password");
+  Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver"); //load driver
+
+	String connectionUrl =
+                "jdbc:sqlserver://" + config.getInitParameter("host-ip") + ";"
+                        + "database=" + config.getInitParameter("dbname") + ";"
+                        + "user=" + config.getInitParameter("user") + ";"
+                        + "password=" + config.getInitParameter("password") + ";"
+                        + "encrypt=true;"
+                        + "trustServerCertificate=false;"
+                        + "loginTimeout=30;";
  
-  Connection con=DriverManager
-    .getConnection("jdbc:mysql://" + dbHostIp + ":3306/dbuser", dbUser, dbPassword); //create connection
+	Connection con = DriverManager.getConnection(connectionUrl); //create connection
   
   if(request.getParameter("btn_register")!=null) //check register button click event not null
   {
