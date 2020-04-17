@@ -32,17 +32,26 @@ pipeline {
       }
     }
 
+    stage('Terraform plan') {
+      steps {
+        sh "terraform plan"
+      }
+    }
+
     stage('Terraform apply') {
       steps {
         withCredentials([azureServicePrincipal('AZURE_CREDENTIALS')]) {
-          sh "terraform apply
-            -var 'subscription_id=$AZURE_SUBSCRIPTION_ID'
-            -var 'client_id=$AZURE_CLIENT_ID'
-            -var 'client_secret=$AZURE_CLIENT_SECRET'
+          sh """
+            terraform apply \
+            -var 'subscription_id=$AZURE_SUBSCRIPTION_ID' \
+            -var 'client_id=$AZURE_CLIENT_ID' \
+            -var 'client_secret=$AZURE_CLIENT_SECRET' \
             -var 'tenant_id=$AZURE_TENANT_ID'"
+          """
         }
       }
     }
+
     stage('Terraform init') {
       steps {
         input message: 'Destroy the infrastructure'
@@ -51,4 +60,3 @@ pipeline {
     }
   }
 }
-
