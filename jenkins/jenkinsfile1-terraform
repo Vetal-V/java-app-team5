@@ -11,7 +11,7 @@ pipeline {
   stages {
     stage('Check terraform') {
       steps {
-        terraform --version
+        sh "terraform --version"
       }
     }
     stage('Az login'){
@@ -22,14 +22,14 @@ pipeline {
             string(credentialsId:'PASSWORD', variable: 'password'),
             string(credentialsId:'TENANT_ID', variable: 'tenant')
           ]) {
-            az login --service-principal --username id --password password --tenant tenant
+            sh "az login --service-principal --username id --password password --tenant tenant"
           }
         }
       }
     }
     stage('Terraform init') {
       steps {
-        terraform init
+        sh "terraform init"
       }
     }
     stage('Terraform init') {
