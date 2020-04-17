@@ -1,0 +1,44 @@
+#!/usr/bin/env groovy
+properties([disableConcurrentBuilds()])
+
+pipeline {
+  agent slave1
+
+  stages {
+    stage('Install terraform and az') {
+      steps {
+        apt-get update -y
+        apt-get upgrade -y
+        apt-get install unzip -y
+        wget https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip
+        unzip terraform_0.12.24_linux_amd64.zip
+        mv terraform /usr/local/bin/
+        terraform --version
+        curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+      }
+    }
+    stage('Az login'){
+      steps {
+        script {
+          withCredentials([
+            string(credentialsId:'APP_ID', variable: 'id'),
+            string(credentialsId:'PASSWORD', variable: 'password'),
+            string(credentialsId:'TENANT_ID', variable: 'tenant')
+          ]) {
+            az login --service-principal --username id --password password --tenant tenant
+          }
+        }
+      }
+    }
+    stage(Terraform init') {
+      steps {
+        terraform init
+      }
+    }
+    stage(Terraform init') {
+      steps {
+
+      }
+    }
+  }
+}
