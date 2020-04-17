@@ -32,9 +32,9 @@ pipeline {
         sh "terraform init"
       }
     }
-    stage('Terraform init') {
+    stage('Terraform apply') {
       steps {
-
+        sh "echo Test"
       }
     }
   }
