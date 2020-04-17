@@ -52,7 +52,7 @@ pipeline {
       }
     }
 
-    stage('Terraform init') {
+    stage('Terraform destroy') {
       steps {
         input message: 'Destroy the infrastructure'
         sh "terraform destroy"
