@@ -89,14 +89,14 @@ pipeline {
         script {
           try {
             sh """
-              cd ./tf_sqlserver/
+              cd ./tf_vms/
               sudo terraform apply -no-color bd_plan.out
               rm /home/jenkins/workspace/tfstates/tfstate2
               cp terraform.tfstate /home/jenkins/workspace/tfstates/tfstate1
             """
           } catch (Exception err){
             sh """
-              cd ./tf_sqlserver/
+              cd ./tf_vms/
               sudo cp /home/jenkins/workspace/tfstates/tfstate2 ./terraform.tfstate
               sudo chmod 664 ./terraform.tfstate
               sudo terraform plan -out=bd_plan.out -no-color
