@@ -1,8 +1,3 @@
-variable SUBSCRIPTION_ID {}
-variable CLIENT_ID {}
-variable CLIENT_SECRET {}
-variable TENANT_ID {}
-
 provider "azurerm" {
   # The "feature" block is required for AzureRM provider 2.x. 
   # If you are using version 1.x, the "features" block is not allowed.
@@ -26,7 +21,7 @@ resource "azurerm_sql_server" "crashdb_sql_server" {
   location                     = azurerm_resource_group.crashdb_rg.location
   version                      = "12.0"
   administrator_login          = "crashadmin"
-  administrator_login_password = "wPZ5GX%517@h*8E2!u"
+  administrator_login_password = "wPZ5GX%517@h*8E2u"
 
   tags = {
     environment = "production crashcourse"
