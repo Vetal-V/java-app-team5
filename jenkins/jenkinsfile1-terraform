@@ -60,14 +60,14 @@ pipeline {
     stage('Terraform apply database') {
       steps {
         sh "cd ./tf_sqlserver/"
-        sh "terraform apply -auto-approve -no-color bd_plan.out"
+        sh "terraform apply -no-color bd_plan.out"
       }
     }
 
     stage('Terraform apply vm') {
       steps {
         sh "cd ./tf_vms/"
-        sh "terraform apply -auto-approve -no-color vm_plan.out"
+        sh "terraform apply -no-color vm_plan.out"
       }
     }
   }
