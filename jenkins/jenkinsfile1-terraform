@@ -67,7 +67,7 @@ pipeline {
       steps {
         sh """
           cd ./tf_sqlserver/
-          terraform apply -no-color bd_plan.out
+          sudo terraform apply -no-color bd_plan.out
           rm /home/jenkins/workspace/tfstates/tfstate1
           cp terraform.tfstate /home/jenkins/workspace/tfstates/tfstate1
         """
@@ -78,7 +78,7 @@ pipeline {
       steps {
         sh """
           cd ./tf_vms/
-          terraform apply -no-color vm_plan.out
+          sudo terraform apply -no-color vm_plan.out
           rm /home/jenkins/workspace/tfstates/tfstate2
           cp terraform.tfstate /home/jenkins/workspace/tfstates/tfstate2
         """
