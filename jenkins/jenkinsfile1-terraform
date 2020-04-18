@@ -69,7 +69,7 @@ pipeline {
               rm /home/jenkins/workspace/tfstates/tfstate1
               cp terraform.tfstate /home/jenkins/workspace/tfstates/tfstate1
             """
-          } catch {
+          } catch (Exception err) {
             sh """
               sudo cp /home/jenkins/workspace/tfstates/tfstate1 ./terraform.tfstate
               sudo chmod 664 ./terraform.tfstate
@@ -93,7 +93,7 @@ pipeline {
               rm /home/jenkins/workspace/tfstates/tfstate2
               cp terraform.tfstate /home/jenkins/workspace/tfstates/tfstate1
             """
-          } catch {
+          } catch (Exception err){
             sh """
               sudo cp /home/jenkins/workspace/tfstates/tfstate2 ./terraform.tfstate
               sudo chmod 664 ./terraform.tfstate
