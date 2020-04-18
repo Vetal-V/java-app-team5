@@ -1,6 +1,8 @@
 #!/usr/bin/env groovy
 properties([disableConcurrentBuilds()])
 
+TARGET_BRANCH_NAME = "master"
+
 pipeline {
   agent {
     label 'ubuntu'
@@ -28,10 +30,13 @@ pipeline {
 
     stage('Terraform init') {
       steps {
-        sh "cd ./tf_vms/"
-        sh "terraform init"
-        sh "cd ../tf_sqlserver/"
-        sh "terraform init"
+        sh """
+          git checkout "${TARGET_BRANCH_NAME}"
+          cd ./tf_vms/
+          terraform init
+          cd ../tf_sqlserver/
+          terraform init
+        """
       }
     }
 
