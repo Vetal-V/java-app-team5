@@ -30,12 +30,12 @@ pipeline {
 
     stage('Terraform init') {
       steps {
+        git checkout "${TARGET_BRANCH_NAME}"
         withCredentials([file(credentialsId: 'tfvars', variable: 'tfvars')]) {
           sh "cp $tfvars ./tf_vms/terraform.tfvars"
           sh "cp $tfvars ./tf_sqlserver/terraform.tfvars"
         }
         sh """
-          git checkout "${TARGET_BRANCH_NAME}"
           cd ./tf_vms/
           terraform init --get=true
           cd ../tf_sqlserver/
