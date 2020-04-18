@@ -47,6 +47,7 @@ pipeline {
     stage('Terraform plan') {
       steps {
         sh """
+          ll
           terraform plan -out=bd_plan.out -no-color
           cd ../tf_vms/
           terraform plan -out=vm_plan.out -no-color
