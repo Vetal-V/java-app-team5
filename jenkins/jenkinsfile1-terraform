@@ -34,6 +34,7 @@ pipeline {
         withCredentials([file(credentialsId: 'tfvars', variable: 'tfvars')]) {
           sh "sudo cp $tfvars ./tf_vms/terraform.tfvars"
           sh "sudo cp $tfvars ./tf_sqlserver/terraform.tfvars"
+          sh "sudo chmod 600 ./tf_vms/terraform.tfvars ./tf_sqlserver/terraform.tfvars"
         }
         sh """
           cd ./tf_vms/
