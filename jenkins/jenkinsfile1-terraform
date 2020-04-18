@@ -71,6 +71,7 @@ pipeline {
             """
           } catch (Exception err) {
             sh """
+              cd ./tf_sqlserver/
               sudo cp /home/jenkins/workspace/tfstates/tfstate1 ./terraform.tfstate
               sudo chmod 664 ./terraform.tfstate
               sudo terraform plan -out=bd_plan.out -no-color
@@ -95,6 +96,7 @@ pipeline {
             """
           } catch (Exception err){
             sh """
+              cd ./tf_sqlserver/
               sudo cp /home/jenkins/workspace/tfstates/tfstate2 ./terraform.tfstate
               sudo chmod 664 ./terraform.tfstate
               sudo terraform plan -out=bd_plan.out -no-color
