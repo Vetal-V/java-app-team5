@@ -42,9 +42,11 @@ pipeline {
           cd ./tf_vms/
           terraform init --get=true
           sudo cp /home/jenkins/workspace/tfstates/tfstate2 ./terraform.tfstate
+          sudo chmod 665 ./terraform.tfstate
           cd ../tf_sqlserver/
           terraform init --get=true
           sudo cp /home/jenkins/workspace/tfstates/tfstate1 ./terraform.tfstate
+          sudo chmod 665 ./terraform.tfstate
         """
       }
     }
