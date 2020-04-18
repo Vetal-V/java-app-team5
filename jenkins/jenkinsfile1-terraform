@@ -74,12 +74,10 @@ pipeline {
         """
       }
     }
-    post {
-      always {
-        sh """
-          deleteDir()
-        """
-      }
+  }
+  post {
+    always {
+      deleteDir()
     }
   }
 }
