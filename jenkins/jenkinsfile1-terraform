@@ -1,0 +1,108 @@
+#!/usr/bin/env groovy
+properties([disableConcurrentBuilds()])
+
+TARGET_BRANCH_NAME = "master"
+
+pipeline {
+  agent {
+    label 'ubuntu'
+  }
+  triggers { pollSCM('* * * * *') }
+  options {
+    timestamps()
+  }
+
+  stages {
+    stage('Check terraform') {
+      steps {
+        deleteDir() // Clean up the workspace
+        checkout scm
+        sh "terraform --version"
+      }
+    }
+
+    stage('Az login'){
+      steps {
+        withCredentials([azureServicePrincipal('AZURE_CREDENTIALS')]) {
+          sh "az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID"
+          sh "az account set --subscription $AZURE_SUBSCRIPTION_ID"
+        }
+      }
+    }
+
+    stage('Terraform init') {
+      steps {
+        sh "git checkout '${TARGET_BRANCH_NAME}'"
+        withCredentials([file(credentialsId: 'tfvars', variable: 'tfvars')]) {
+          sh "sudo cp $tfvars ./tf_vms/variables.tf"
+          sh "sudo cp $tfvars ./tf_sqlserver/variables.tf"
+          sh "sudo chmod 664 ./tf_vms/variables.tf ./tf_sqlserver/variables.tf"
+        }
+        sh """
+          cd ./tf_vms/
+          terraform init --get=true
+          cd ../tf_sqlserver/
+          terraform init --get=true
+        """
+      }
+    }
+
+    stage('Terraform plan') {
+      steps {
+        sh """
+          pwd
+          cd ./tf_sqlserver/
+          sudo terraform plan -out=bd_plan.out -no-color
+          cd ../tf_vms/
+          sudo terraform plan -out=vm_plan.out -no-color
+        """
+      }
+    }
+
+    stage('Terraform apply database') {
+      steps {
+        script {
+          try {
+            sh """
+              cd ./tf_sqlserver/
+              sudo terraform apply -no-color bd_plan.out
+              cp terraform.tfstate ~/workspace/tfstates/tfstate1
+            """
+          } catch (Exception err) {
+            sh """
+              cd ./tf_sqlserver/
+              sudo cp ~/workspace/tfstates/tfstate1 ./terraform.tfstate
+              sudo chmod 664 ./terraform.tfstate
+              sudo terraform plan -out=bd_plan.out -no-color
+              sudo terraform apply -no-color bd_plan.out
+              cp terraform.tfstate ~/workspace/tfstates/tfstate1
+            """
+          }
+        }
+      }
+    }
+
+    stage('Terraform apply vm') {
+      steps {
+        script {
+          try {
+            sh """
+              cd ./tf_vms/
+              sudo terraform apply -no-color bd_plan.out
+              cp terraform.tfstate ~/workspace/tfstates/tfstate1
+            """
+          } catch (Exception err){
+            sh """
+              cd ./tf_vms/
+              sudo cp ~/workspace/tfstates/tfstate2 ./terraform.tfstate
+              sudo chmod 664 ./terraform.tfstate
+              sudo terraform plan -out=bd_plan.out -no-color
+              sudo terraform apply -no-color bd_plan.out
+              cp terraform.tfstate ~/workspace/tfstates/tfstate2
+            """
+          }
+        }
+      }
+    }
+  }
+}
