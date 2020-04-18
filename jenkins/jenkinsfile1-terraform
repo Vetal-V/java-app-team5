@@ -46,7 +46,7 @@ pipeline {
           cd ../tf_sqlserver/
           terraform init --get=true
           sudo cp /home/jenkins/workspace/tfstates/tfstate1 ./terraform.tfstate
-          sudo chmod 665 ./terraform.tfstate
+          sudo chmod 664 ./terraform.tfstate
         """
       }
     }
