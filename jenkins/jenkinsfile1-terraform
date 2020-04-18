@@ -45,7 +45,7 @@ pipeline {
       steps {
         withCredentials([azureServicePrincipal('AZURE_CREDENTIALS')]) {
           sh """
-            terraform apply -auto-approve \
+            terraform apply -auto-approve -input=false \
             -var 'subscription_id=$AZURE_SUBSCRIPTION_ID' \
             -var 'client_id=$AZURE_CLIENT_ID' \
             -var 'client_secret=$AZURE_CLIENT_SECRET' \
@@ -60,7 +60,7 @@ pipeline {
         withCredentials([azureServicePrincipal('AZURE_CREDENTIALS')]) {
           sh """
             cd ../tf_vms/
-            terraform apply -auto-approve \
+            terraform apply -auto-approve -input=false \
             -var 'subscription_id=$AZURE_SUBSCRIPTION_ID' \
             -var 'client_id=$AZURE_CLIENT_ID' \
             -var 'client_secret=$AZURE_CLIENT_SECRET' \
