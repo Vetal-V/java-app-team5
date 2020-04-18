@@ -47,6 +47,7 @@ pipeline {
     stage('Terraform plan') {
       steps {
         sh """
+          pwd
           cd ./tf_sqlserver/
           terraform plan -out=bd_plan.out -no-color
           cd ../tf_vms/
