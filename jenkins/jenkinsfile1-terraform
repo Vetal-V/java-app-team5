@@ -32,8 +32,8 @@ pipeline {
       steps {
         sh "git checkout '${TARGET_BRANCH_NAME}'"
         withCredentials([file(credentialsId: 'tfvars', variable: 'tfvars')]) {
-          sh "cp $tfvars ./tf_vms/terraform.tfvars"
-          sh "cp $tfvars ./tf_sqlserver/terraform.tfvars"
+          sh "sudo cp $tfvars ./tf_vms/terraform.tfvars"
+          sh "sudo cp $tfvars ./tf_sqlserver/terraform.tfvars"
         }
         sh """
           cd ./tf_vms/
