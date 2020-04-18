@@ -66,7 +66,7 @@ pipeline {
             sh """
               cd ./tf_sqlserver/
               sudo terraform apply -no-color bd_plan.out
-              rm /home/jenkins/workspace/tfstates/tfstate1
+              //rm /home/jenkins/workspace/tfstates/tfstate1
               cp terraform.tfstate /home/jenkins/workspace/tfstates/tfstate1
             """
           } catch (Exception err) {
@@ -76,7 +76,7 @@ pipeline {
               sudo chmod 664 ./terraform.tfstate
               sudo terraform plan -out=bd_plan.out -no-color
               sudo terraform apply -no-color bd_plan.out
-              rm /home/jenkins/workspace/tfstates/tfstate1
+              //rm /home/jenkins/workspace/tfstates/tfstate1
               cp terraform.tfstate /home/jenkins/workspace/tfstates/tfstate1
             """
           }
@@ -91,7 +91,7 @@ pipeline {
             sh """
               cd ./tf_vms/
               sudo terraform apply -no-color bd_plan.out
-              rm /home/jenkins/workspace/tfstates/tfstate2
+              //rm /home/jenkins/workspace/tfstates/tfstate2
               cp terraform.tfstate /home/jenkins/workspace/tfstates/tfstate1
             """
           } catch (Exception err){
@@ -101,7 +101,7 @@ pipeline {
               sudo chmod 664 ./terraform.tfstate
               sudo terraform plan -out=bd_plan.out -no-color
               sudo terraform apply -no-color bd_plan.out
-              rm /home/jenkins/workspace/tfstates/tfstate2
+              //rm /home/jenkins/workspace/tfstates/tfstate2
               cp terraform.tfstate /home/jenkins/workspace/tfstates/tfstate2
             """
           }
