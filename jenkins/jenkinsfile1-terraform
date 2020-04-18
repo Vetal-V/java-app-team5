@@ -41,8 +41,10 @@ pipeline {
         sh """
           cd ./tf_vms/
           terraform init --get=true
+          sudo cp /home/jenkins/workspace/tfstates/tfstate2 ./terraform.tfstate
           cd ../tf_sqlserver/
           terraform init --get=true
+          sudo cp /home/jenkins/workspace/tfstates/tfstate1 ./terraform.tfstate
         """
       }
     }
@@ -64,6 +66,8 @@ pipeline {
         sh """
           cd ./tf_sqlserver/
           terraform apply -no-color bd_plan.out
+          rm /home/jenkins/workspace/tfstates/tfstate1
+          cp terraform.tfstate /home/jenkins/workspace/tfstates/tfstate1
         """
       }
     }
@@ -73,6 +77,8 @@ pipeline {
         sh """
           cd ./tf_vms/
           terraform apply -no-color vm_plan.out
+          rm /home/jenkins/workspace/tfstates/tfstate2
+          cp terraform.tfstate /home/jenkins/workspace/tfstates/tfstate2
         """
       }
     }
