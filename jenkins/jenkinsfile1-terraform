@@ -59,16 +59,19 @@ pipeline {
 
     stage('Terraform apply database') {
       steps {
-        sh "cd ./tf_sqlserver/"
-        sh "ls -la"
-        sh "terraform apply -no-color bd_plan.out"
+        sh """
+          cd ./tf_sqlserver/
+          terraform apply -no-color bd_plan.out
+        """
       }
     }
 
     stage('Terraform apply vm') {
       steps {
-        sh "cd ./tf_vms/"
-        sh "terraform apply -no-color vm_plan.out"
+        sh """
+          cd ./tf_vms/
+          terraform apply -no-color vm_plan.out
+        """
       }
     }
   }
