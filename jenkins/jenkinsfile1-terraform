@@ -61,44 +61,48 @@ pipeline {
 
     stage('Terraform apply database') {
       steps {
-        try {
-          sh """
-            cd ./tf_sqlserver/
-            sudo terraform apply -no-color bd_plan.out
-            rm /home/jenkins/workspace/tfstates/tfstate1
-            cp terraform.tfstate /home/jenkins/workspace/tfstates/tfstate1
-          """
-        } catch {
-          sh """
-            sudo cp /home/jenkins/workspace/tfstates/tfstate1 ./terraform.tfstate
-            sudo chmod 664 ./terraform.tfstate
-            sudo terraform plan -out=bd_plan.out -no-color
-            sudo terraform apply -no-color bd_plan.out
-            rm /home/jenkins/workspace/tfstates/tfstate1
-            cp terraform.tfstate /home/jenkins/workspace/tfstates/tfstate1
-          """
+        script {
+          try {
+            sh """
+              cd ./tf_sqlserver/
+              sudo terraform apply -no-color bd_plan.out
+              rm /home/jenkins/workspace/tfstates/tfstate1
+              cp terraform.tfstate /home/jenkins/workspace/tfstates/tfstate1
+            """
+          } catch {
+            sh """
+              sudo cp /home/jenkins/workspace/tfstates/tfstate1 ./terraform.tfstate
+              sudo chmod 664 ./terraform.tfstate
+              sudo terraform plan -out=bd_plan.out -no-color
+              sudo terraform apply -no-color bd_plan.out
+              rm /home/jenkins/workspace/tfstates/tfstate1
+              cp terraform.tfstate /home/jenkins/workspace/tfstates/tfstate1
+            """
+          }
         }
       }
     }
 
     stage('Terraform apply vm') {
       steps {
-        try {
-          sh """
-            cd ./tf_sqlserver/
-            sudo terraform apply -no-color bd_plan.out
-            rm /home/jenkins/workspace/tfstates/tfstate2
-            cp terraform.tfstate /home/jenkins/workspace/tfstates/tfstate1
-          """
-        } catch {
-          sh """
-            sudo cp /home/jenkins/workspace/tfstates/tfstate2 ./terraform.tfstate
-            sudo chmod 664 ./terraform.tfstate
-            sudo terraform plan -out=bd_plan.out -no-color
-            sudo terraform apply -no-color bd_plan.out
-            rm /home/jenkins/workspace/tfstates/tfstate1
-            cp terraform.tfstate /home/jenkins/workspace/tfstates/tfstate2
-          """
+        script {
+          try {
+            sh """
+              cd ./tf_sqlserver/
+              sudo terraform apply -no-color bd_plan.out
+              rm /home/jenkins/workspace/tfstates/tfstate2
+              cp terraform.tfstate /home/jenkins/workspace/tfstates/tfstate1
+            """
+          } catch {
+            sh """
+              sudo cp /home/jenkins/workspace/tfstates/tfstate2 ./terraform.tfstate
+              sudo chmod 664 ./terraform.tfstate
+              sudo terraform plan -out=bd_plan.out -no-color
+              sudo terraform apply -no-color bd_plan.out
+              rm /home/jenkins/workspace/tfstates/tfstate1
+              cp terraform.tfstate /home/jenkins/workspace/tfstates/tfstate2
+            """
+          }
         }
       }
     }
