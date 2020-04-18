@@ -34,7 +34,7 @@ pipeline {
         withCredentials([file(credentialsId: 'tfvars', variable: 'tfvars')]) {
           sh "sudo cp $tfvars ./tf_vms/variables.tf"
           sh "sudo cp $tfvars ./tf_sqlserver/variables.tf"
-          sh "sudo chmod 777 ./tf_vms/variables.tf ./tf_sqlserver/variables.tf"
+          //sh "sudo chmod 777 ./tf_vms/variables.tf ./tf_sqlserver/variables.tf"
         }
         sh """
           cd ./tf_vms/
