@@ -30,43 +30,41 @@ pipeline {
 
     stage('Terraform init') {
       steps {
+        withCredentials([file(credentialsId: 'tfvars', variable: 'tfvars')]) {
+          sh "cp $tfvars ./tf_vms/terraform.tfvars"
+          sh "cp $tfvars ./tf_sqlserver/terraform.tfvars"
+        }
         sh """
           git checkout "${TARGET_BRANCH_NAME}"
           cd ./tf_vms/
-          terraform init
+          terraform init --get=true
           cd ../tf_sqlserver/
-          terraform init
+          terraform init --get=true
+        """
+      }
+    }
+
+    stage('Terraform plan') {
+      steps {
+        sh """
+          terraform plan -out=bd_plan.out -no-color
+          cd ../tf_vms/
+          terraform plan -out=vm_plan.out -no-color
         """
       }
     }
 
     stage('Terraform apply database') {
-
       steps {
-        withCredentials([azureServicePrincipal('AZURE_CREDENTIALS')]) {
-          sh """
-            terraform apply -auto-approve -input=false \
-            -var 'subscription_id=$AZURE_SUBSCRIPTION_ID' \
-            -var 'client_id=$AZURE_CLIENT_ID' \
-            -var 'client_secret=$AZURE_CLIENT_SECRET' \
-            -var 'tenant_id=$AZURE_TENANT_ID'"
-          """
-        }
+        sh "cd ../tf_sqlserver/"
+        sh "terraform apply -auto-approve -no-color bd_plan.out"
       }
     }
 
     stage('Terraform apply vm') {
       steps {
-        withCredentials([azureServicePrincipal('AZURE_CREDENTIALS')]) {
-          sh """
-            cd ../tf_vms/
-            terraform apply -auto-approve -input=false \
-            -var 'subscription_id=$AZURE_SUBSCRIPTION_ID' \
-            -var 'client_id=$AZURE_CLIENT_ID' \
-            -var 'client_secret=$AZURE_CLIENT_SECRET' \
-            -var 'tenant_id=$AZURE_TENANT_ID'"
-          """
-        }
+        sh "cd ../tf_vms/"
+        sh "terraform apply -auto-approve -no-color vm_plan.out"
       }
     }
   }
