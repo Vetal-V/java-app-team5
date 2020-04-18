@@ -1,13 +1,18 @@
+variable SUBSCRIPTION_ID {}
+variable CLIENT_ID {}
+variable CLIENT_SECRET {}
+variable TENANT_ID {}
+
 provider "azurerm" {
   # The "feature" block is required for AzureRM provider 2.x. 
   # If you are using version 1.x, the "features" block is not allowed.
   version = "~>2.0"
   features {}
   
-  subscription_id = "xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-  client_id       = "xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-  client_secret   = "xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-  tenant_id       = "xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+  subscription_id = var.SUBSCRIPTION_ID 
+  client_id       = var.CLIENT_ID
+  client_secret   = var.CLIENT_SECRET
+  tenant_id       = var.TENANT_ID
 }
 
 resource "azurerm_resource_group" "crashdb_rg" {
