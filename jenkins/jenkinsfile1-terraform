@@ -15,7 +15,6 @@ pipeline {
   stages {
     stage('Check terraform') {
       steps {
-        deleteDir()
         sh "terraform --version"
       }
     }
@@ -74,6 +73,11 @@ pipeline {
           terraform apply -no-color vm_plan.out
         """
       }
+    }
+  }
+  post {
+    always {
+      deleteDir()
     }
   }
 }
