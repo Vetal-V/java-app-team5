@@ -52,8 +52,10 @@ pipeline {
         sh """
           pwd
           cd ./tf_sqlserver/
+          rm ./terraform.tfstate
           sudo terraform plan -out=bd_plan.out -no-color
           cd ../tf_vms/
+          rm ./terraform.tfstate
           sudo terraform plan -out=vm_plan.out -no-color
         """
       }
@@ -89,7 +91,7 @@ pipeline {
             sh """
               cd ./tf_vms/
               sudo terraform apply -no-color bd_plan.out
-              cp terraform.tfstate ~/workspace/tfstates/tfstate1
+              cp terraform.tfstate ~/workspace/tfstates/tfstate2
             """
           } catch (Exception err){
             sh """
