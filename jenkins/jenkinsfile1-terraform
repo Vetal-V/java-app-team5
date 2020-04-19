@@ -87,7 +87,7 @@ pipeline {
           try {
             sh """
               cd ./tf_vms/
-              sudo terraform apply -no-color bd_plan.out
+              sudo terraform apply -no-color vm_plan.out
               cp terraform.tfstate ~/workspace/tfstates/tfstate2
             """
           } catch (Exception err){
@@ -95,8 +95,8 @@ pipeline {
               cd ./tf_vms/
               sudo cp ~/workspace/tfstates/tfstate2 ./terraform.tfstate
               sudo chmod 664 ./terraform.tfstate
-              sudo terraform plan -out=bd_plan.out -no-color
-              sudo terraform apply -no-color bd_plan.out
+              sudo terraform plan -out=vm_plan.out -no-color
+              sudo terraform apply -no-color vm_plan.out
               cp terraform.tfstate ~/workspace/tfstates/tfstate2
             """
           }
