@@ -20,8 +20,8 @@ resource "azurerm_sql_server" "crashdb_sql_server" {
   resource_group_name          = azurerm_resource_group.crashdb_rg.name
   location                     = azurerm_resource_group.crashdb_rg.location
   version                      = "12.0"
-  administrator_login          = "crashadmin"
-  administrator_login_password = "wPZ5GX%517@h*8E2u"
+  administrator_login          = var.SQL_LOGIN
+  administrator_login_password = var.SQL_PASSWORD
 
   tags = {
     environment = "production crashcourse"
