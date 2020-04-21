@@ -15,6 +15,7 @@ pipeline {
   stages {
     stage('Check terraform') {
       steps {
+        slackSend (color: '#FFFF00', message: "STARTED: Pipeline '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL})")
         deleteDir() // Clean up the workspace
         checkout scm
         sh "terraform --version"
@@ -30,13 +31,23 @@ pipeline {
       }
     }
 
+    stage('Delete old infrastructure'){
+      sh """
+        az group delete -n prd-sqlserver-rg-eastus-crashcourse -y
+        az group delete -n prd-vm-rg-eastus-crashcourse -y
+      """
+    }
+
     stage('Terraform init') {
       steps {
         sh "git checkout '${TARGET_BRANCH_NAME}'"
-        withCredentials([file(credentialsId: 'tfvars', variable: 'tfvars')]) {
-          sh "sudo cp $tfvars ./tf_vms/variables.tf"
-          sh "sudo cp $tfvars ./tf_sqlserver/variables.tf"
-          sh "sudo chmod 664 ./tf_vms/variables.tf ./tf_sqlserver/variables.tf"
+        withCredentials([file(credentialsId: 'sql_variables', variable: 'sql_variables')]) {
+          sh "sudo cp $sql_variables ./tf_sqlserver/variables.tf"
+          sh "sudo chmod 664 ./tf_sqlserver/variables.tf"
+        }
+        withCredentials([file(credentialsId: 'vm_variables', variable: 'vm_variables')]) {
+          sh "sudo cp $vm_variables ./tf_vms/variables.tf"
+          sh "sudo chmod 664 ./tf_vms/variables.tf"
         }
         sh """
           cd ./tf_vms/
@@ -61,21 +72,12 @@ pipeline {
     stage('Terraform apply database') {
       steps {
         script {
+          sh "cd ./tf_sqlserver/"
           try {
-            sh """
-              cd ./tf_sqlserver/
-              sudo terraform apply -no-color bd_plan.out
-              cp terraform.tfstate ~/workspace/tfstates/tfstate1
-            """
-          } catch (Exception err) {
-            sh """
-              cd ./tf_sqlserver/
-              sudo cp ~/workspace/tfstates/tfstate1 ./terraform.tfstate
-              sudo chmod 664 ./terraform.tfstate
-              sudo terraform plan -out=bd_plan.out -no-color
-              sudo terraform apply -no-color bd_plan.out
-              cp terraform.tfstate ~/workspace/tfstates/tfstate1
-            """
+            sh "sudo terraform apply -no-color bd_plan.out"
+            slackSend(color: '#00FF00', message: "SUCCESS: Pipeline '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). Terraform apply database success")
+          } catch (Exception err){
+            slackSend(color: '#FF0000', message: "FAILED: Pipeline '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). Terraform apply database failed.")
           }
         }
       }
@@ -84,21 +86,12 @@ pipeline {
     stage('Terraform apply vm') {
       steps {
         script {
+          sh "cd ./tf_vms/"
           try {
-            sh """
-              cd ./tf_vms/
-              sudo terraform apply -no-color vm_plan.out
-              cp terraform.tfstate ~/workspace/tfstates/tfstate2
-            """
+            sh "sudo terraform apply -no-color vm_plan.out"
+            slackSend(color: '#00FF00', message: "SUCCESS: Pipeline '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). Terraform apply virtual machines success")
           } catch (Exception err){
-            sh """
-              cd ./tf_vms/
-              sudo cp ~/workspace/tfstates/tfstate2 ./terraform.tfstate
-              sudo chmod 664 ./terraform.tfstate
-              sudo terraform plan -out=vm_plan.out -no-color
-              sudo terraform apply -no-color vm_plan.out
-              cp terraform.tfstate ~/workspace/tfstates/tfstate2
-            """
+            slackSend(color: '#FF0000', message: "FAILED: Pipeline '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). Terraform apply virtual machines failed.")
           }
         }
       }
