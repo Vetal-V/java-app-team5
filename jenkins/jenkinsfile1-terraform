@@ -83,8 +83,10 @@ pipeline {
       steps {
         script {
           try {
-            sh "cd ./tf_sqlserver/"
-            sh "sudo terraform apply -no-color bd_plan.out"
+            sh """
+              cd ./tf_sqlserver/"
+              sudo terraform apply -no-color bd_plan.out
+            """
             slackSend(color: '#00FF00', message: "SUCCESS: Pipeline '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). Terraform apply database success")
           } catch (Exception err){
             slackSend(color: '#FF0000', message: "FAILED: Pipeline '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). Terraform apply database failed.")
@@ -97,8 +99,10 @@ pipeline {
       steps {
         script {
           try {
-            sh "cd ./tf_vms/"
-            sh "sudo terraform apply -no-color vm_plan.out"
+            sh """
+              cd ./tf_vms/
+              sudo terraform apply -no-color vm_plan.out
+            """
             slackSend(color: '#00FF00', message: "SUCCESS: Pipeline '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). Terraform apply virtual machines success")
           } catch (Exception err){
             slackSend(color: '#FF0000', message: "FAILED: Pipeline '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). Terraform apply virtual machines failed.")
