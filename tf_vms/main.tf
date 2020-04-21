@@ -105,19 +105,9 @@ resource "azurerm_network_interface_security_group_association" "example" {
     network_security_group_id = azurerm_network_security_group.myterraformnsg.id # 58 line"myterraformnsg"
 }
 
-# Generate random text for a unique storage account name
-resource "random_id" "randomId" {
-    keepers = {
-        # Generate a new ID only when a new resource group is defined
-        resource_group = azurerm_resource_group.myterraformgroup.name
-    }
-
-    byte_length = 8
-}
-
 # Create storage account for boot diagnostics
 resource "azurerm_storage_account" "mystorageaccount" {
-    name                        = "diag${random_id.randomId.hex}"
+    name                        = "storageaccount1cc"
     resource_group_name         = azurerm_resource_group.myterraformgroup.name #16 line myterraformgroup
     location                    = "eastus"
     account_tier                = "Standard" #choose
@@ -151,8 +141,8 @@ resource "azurerm_linux_virtual_machine" "myterraformvm" {
     }
 
     computer_name  = "myvm"
-    admin_username = "machine_front" #new user name
-    admin_password = "+Bz;=+Y22kkk"
+    admin_username = var.ADMIN_USERNAME
+    admin_password = var.ADMIN_PASSWORD
     disable_password_authentication = false
 
     #no ssh
