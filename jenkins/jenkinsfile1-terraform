@@ -82,8 +82,8 @@ pipeline {
     stage('Terraform apply database') {
       steps {
         script {
-          sh "cd ./tf_sqlserver/"
           try {
+            sh "cd ./tf_sqlserver/"
             sh "sudo terraform apply -no-color bd_plan.out"
             slackSend(color: '#00FF00', message: "SUCCESS: Pipeline '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). Terraform apply database success")
           } catch (Exception err){
@@ -96,8 +96,8 @@ pipeline {
     stage('Terraform apply vm') {
       steps {
         script {
-          sh "cd ./tf_vms/"
           try {
+            sh "cd ./tf_vms/"
             sh "sudo terraform apply -no-color vm_plan.out"
             slackSend(color: '#00FF00', message: "SUCCESS: Pipeline '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). Terraform apply virtual machines success")
           } catch (Exception err){
