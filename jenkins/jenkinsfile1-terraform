@@ -32,10 +32,12 @@ pipeline {
     }
 
     stage('Delete old infrastructure'){
-      sh """
-        az group delete -n prd-sqlserver-rg-eastus-crashcourse -y
-        az group delete -n prd-vm-rg-eastus-crashcourse -y
-      """
+      steps {
+        sh """
+          az group delete -n prd-sqlserver-rg-eastus-crashcourse -y
+          az group delete -n prd-vm-rg-eastus-crashcourse -y
+        """
+      }
     }
 
     stage('Terraform init') {
