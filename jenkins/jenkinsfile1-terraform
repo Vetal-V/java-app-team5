@@ -35,10 +35,12 @@ pipeline {
       steps {
         script{
           try {
-            sh """
-             az group delete -n prd-sqlserver-rg-eastus-crashcourse -y
-             az group delete -n prd-vm-rg-eastus-crashcourse -y
-            """
+            sh "az group delete -n prd-sqlserver-rg-eastus-crashcourse -y"
+          } catch (Exception err){
+            echo 'Failed to delete old infrastructure'
+          }
+          try {
+            sh "az group delete -n prd-vm-rg-eastus-crashcourse -y"
           } catch (Exception err){
             echo 'Failed to delete old infrastructure'
           }
