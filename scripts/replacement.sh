@@ -1,8 +1,8 @@
 #!/bin/bash
 
 file='web.xml'
-hostip='HOSTVALUE'
-dbname='DBNAMEVALUE'
+hostip='prd-sqlserver-eastus-crashcourse.database.windows.net'
+dbname='prd-sqldb-eastus-crashcourse'
 user='LOGINVALUE'
 password='PASSWORDVALUE'
 
