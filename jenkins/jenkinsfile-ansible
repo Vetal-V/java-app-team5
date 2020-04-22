@@ -85,8 +85,10 @@ pipeline {
           ansible-playbook -i hosts tomcat.yml
         """
 
-        env.IP = sh "az vm show -d -g prd-vm-rg-eastus-crashcourse  -n prd-vm1-eastus-crashcourse  --query publicIps -o tsv"
-        echo "Ip address: ${env.IP}:8080/app"
+        environment {
+          IP_ADDRESS = sh(script: 'az vm show -d -g prd-vm-rg-eastus-crashcourse  -n prd-vm0-eastus-crashcourse  --query publicIps -o tsv', , returnStdout: true).trim()
+        }
+        echo "Ip address: ${IP_ADDRESS}:8080"
       }
     }
   }
