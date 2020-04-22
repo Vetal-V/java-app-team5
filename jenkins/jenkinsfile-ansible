@@ -12,10 +12,10 @@ pipeline {
     timestamps()
   }
 
-
   environment {
-    IP_ADDRESS = "${sh(script:'az vm show -d -g prd-vm-rg-eastus-crashcourse  -n prd-vm0-eastus-crashcourse  --query publicIps -o tsv', returnStdout: true)}"
+    IP_ADDRESS = ' '
   }
+
   stages {
     stage('Check ansible') {
       steps {
@@ -89,7 +89,9 @@ pipeline {
           ansible-playbook -i hosts tomcat.yml
         """
 
-
+        script{
+          IP_ADDRESS = = sh (script: 'az vm show -d -g prd-vm-rg-eastus-crashcourse  -n prd-vm0-eastus-crashcourse  --query publicIps -o tsv', returnStdout: true).trim()
+        }
         echo "Ip address: ${IP_ADDRESS}:8080"
       }
     }
