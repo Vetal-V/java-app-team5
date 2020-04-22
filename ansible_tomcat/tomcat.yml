@@ -71,10 +71,9 @@
       mode: 0644
 
   - name: Unzip app to webapps Tomcat
-    command: cd /opt/tomcat/webapps/ && pwd
-    register: mymotd
-    become: true
-
+    shell:
+      cmd: jar -xvf tomcat.war
+      chdir: /opt/tomcat/webapps/
 
 # Setup
 # ansible-playbook -i hosts tomcat.yml
