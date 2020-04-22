@@ -1,63 +1,63 @@
 <web-app>
-  
-<servlet>  
-  <servlet-name>register</servlet-name>  
-  <jsp-file>/register.jsp</jsp-file>  
-    
-  <init-param>  
-    <param-name>host-ip</param-name>  
-    <param-value>host-ip:1433</param-value>  
-  </init-param>
 
-  <init-param>  
-    <param-name>dbname</param-name>  
-    <param-value>dbname</param-value>  
-  </init-param> 
+  <servlet>
+    <servlet-name>register</servlet-name>
+    <jsp-file>/register.jsp</jsp-file>
 
-  <init-param>  
-    <param-name>user</param-name>  
-    <param-value>user</param-value>  
-  </init-param> 
+    <init-param>
+      <param-name>host-ip</param-name>
+      <param-value>host-ip-value:1433</param-value>
+    </init-param>
 
-  <init-param>  
-    <param-name>password</param-name>  
-    <param-value>password</param-value>  
-  </init-param> 
-</servlet> 
+    <init-param>
+      <param-name>dbname</param-name>
+      <param-value>dbname-value</param-value>
+    </init-param>
 
-<servlet>  
-  <servlet-name>index</servlet-name>  
-  <jsp-file>/index.jsp</jsp-file>  
-    
-  <init-param>  
-    <param-name>host-ip</param-name>  
-    <param-value>host-ip:1433</param-value>  
-  </init-param>
+    <init-param>
+      <param-name>user</param-name>
+      <param-value>user-value</param-value>
+    </init-param>
 
-  <init-param>  
-    <param-name>dbname</param-name>  
-    <param-value>dbname</param-value>  
-  </init-param> 
+    <init-param>
+      <param-name>password</param-name>
+      <param-value>password-value</param-value>
+    </init-param>
+  </servlet>
 
-  <init-param>  
-    <param-name>user</param-name>  
-    <param-value>user</param-value>  
-  </init-param> 
+  <servlet>
+    <servlet-name>index</servlet-name>
+    <jsp-file>/index.jsp</jsp-file>
 
-  <init-param>  
-    <param-name>password</param-name>  
-    <param-value>password</param-value>  
-  </init-param> 
-</servlet> 
-  
-<servlet-mapping>  
-  <servlet-name>register</servlet-name>  
-  <url-pattern>/register.jsp</url-pattern>  
-</servlet-mapping>  
-  
-<servlet-mapping>  
-  <servlet-name>index</servlet-name>  
-  <url-pattern>/index.jsp</url-pattern>  
-</servlet-mapping> 
+    <init-param>
+      <param-name>host-ip</param-name>
+      <param-value>host-ip-value:1433</param-value>
+    </init-param>
+
+    <init-param>
+      <param-name>dbname</param-name>
+      <param-value>dbname-value</param-value>
+    </init-param>
+
+    <init-param>
+      <param-name>user</param-name>
+      <param-value>user-value</param-value>
+    </init-param>
+
+    <init-param>
+      <param-name>password</param-name>
+      <param-value>password-value</param-value>
+    </init-param>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>register</servlet-name>
+    <url-pattern>/register.jsp</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>index</servlet-name>
+    <url-pattern>/index.jsp</url-pattern>
+  </servlet-mapping>
 
 </web-app>
