@@ -84,7 +84,7 @@ pipeline {
         script {
           try {
             sh """
-              cd ./tf_sqlserver/"
+              cd ./tf_sqlserver/
               sudo terraform apply -no-color bd_plan.out
             """
             slackSend(color: '#00FF00', message: "SUCCESS: Pipeline '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). Terraform apply database success")
