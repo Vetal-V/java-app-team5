@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 properties([disableConcurrentBuilds()])
 
-TARGET_BRANCH_NAME = "master"
+TARGET_BRANCH_NAME = "jenkins-dev2"
 
 pipeline {
   agent {
@@ -15,6 +15,7 @@ pipeline {
   stages {
     stage('Check ansible') {
       steps {
+        // slackSend (color: '#FFFF00', message: "STARTED: Pipeline2 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL})")
         sh "git checkout '${TARGET_BRANCH_NAME}'"
         sh "ansible --version"
         deleteDir() // Clean up the workspace
@@ -38,8 +39,33 @@ pipeline {
       }
     }
 
+    stage('Restore database') {
+      steps {
+        withCredentials([file(credentialsId: 'backup_db', variable: 'backup_db')]) {
+          withCredentials([usernamePassword(credentialsId: 'db_loginpass', usernameVariable: 'LOGIN_DB1', passwordVariable: 'PASSWORD_DB1')]) {
+            sh """
+              cp $backup_db ./scripts/crashdb.bacpac
+              cd ./scripts/
+              sed -i "sLOGINVALUE/$LOGIN_DB1" restore_db.sh
+              sed -i "sPASSWORDVALUE/$PASSWORD_DB1" restore_db.sh
+              ./restore_db.sh
+            """
+          }
+        }
+      }
+    }
+
     stage('Build artifact') {
       steps {
+        withCredentials([usernamePassword(credentialsId: 'db_loginpass', usernameVariable: 'LOGIN_DB2', passwordVariable: 'PASSWORD_DB2')]) {
+          sh """
+            cp ./scripts/replacement.sh ./app/WEB-INF/
+            cd ./app/WEB-INF/
+            sed -i "sLOGINVALUE/$LOGIN_DB2" replacement.sh
+            sed -i "sPASSWORDVALUE/$PASSWORD_DB2" replacement.sh
+            ./replacement.sh
+            rm ./replacement.sh
+          """
         sh "jar -cvf tomcat.war ./app/"
         sh "cp tomcat.war ./ansible_tomcat/tomcat.war"
       }
@@ -54,4 +80,13 @@ pipeline {
       }
     }
   }
+/*  post {
+    success {
+      slackSend(color: '#00FF00', message: "SUCCESS: Pipeline2 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). The environment was successfully configured. Visit websites: `az vm show -d -g prd-vm-rg-eastus-crashcourse  -n prd-vm0-eastus-crashcourse  --query publicIps -o tsv`:8080/app")
+    }
+
+    failure {
+      slackSend(color: '#FF0000', message: "FAILED: Pipeline2 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). The environment was not configured.")
+    }
+  } */
 }
