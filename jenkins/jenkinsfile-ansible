@@ -12,10 +12,11 @@ pipeline {
     timestamps()
   }
 
+
+  environment {
+    IP_ADDRESS = ''
+  }
   stages {
-    environment {
-      IP_ADDRESS = sh(script: 'az vm show -d -g prd-vm-rg-eastus-crashcourse  -n prd-vm0-eastus-crashcourse  --query publicIps -o tsv', , returnStdout: true).trim()
-    }
     stage('Check ansible') {
       steps {
         // slackSend (color: '#FFFF00', message: "STARTED: Pipeline2 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL})")
@@ -88,7 +89,7 @@ pipeline {
           ansible-playbook -i hosts tomcat.yml
         """
 
-
+        IP_ADDRESS = sh "az vm show -d -g prd-vm-rg-eastus-crashcourse  -n prd-vm0-eastus-crashcourse  --query publicIps -o tsv"
         echo "Ip address: ${IP_ADDRESS}:8080"
       }
     }
