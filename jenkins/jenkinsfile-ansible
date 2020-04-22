@@ -40,7 +40,7 @@ pipeline {
 
     stage('Build artifact') {
       steps {
-        jar -cvf tomcat.war ./app/
+        sh "jar -cvf tomcat.war ./app/"
       }
     }
 
