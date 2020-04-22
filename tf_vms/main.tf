@@ -45,7 +45,7 @@ resource "azurerm_subnet" "myterraformsubnet" {
 
 # Create public IPs
 resource "azurerm_public_ip" "myterraformpublicip" {
-    count                        = 3
+    count                        = 2
     name                         = "prd-publicip${count.index}-eastus-crashcourse"
     location                     = "eastus"
     resource_group_name          = azurerm_resource_group.myterraformgroup.name #16 line "myterraformgroup"
@@ -74,6 +74,18 @@ resource "azurerm_network_security_group" "myterraformnsg" {
         destination_address_prefix = "*"
     }
 
+    security_rule {
+        name                       = "TomCat"
+        priority                   = 1002
+        direction                  = "Inbound"
+        access                     = "Allow"
+        protocol                   = "Tcp"
+        source_port_range          = "*"
+        destination_port_range     = "8080"
+        source_address_prefix      = "*"
+        destination_address_prefix = "*"
+    }
+
     tags = {
         environment = "Terraform Demo"
     }
@@ -81,7 +93,7 @@ resource "azurerm_network_security_group" "myterraformnsg" {
 
 # Create network interface
 resource "azurerm_network_interface" "myterraformnic" {
-    count               = 3
+    count               = 2
     name                = "prd-nic${count.index}-eastus-crashcourse"
     location            = "eastus"
     resource_group_name = azurerm_resource_group.myterraformgroup.name #16 line "myterraformgroup"
@@ -100,7 +112,7 @@ resource "azurerm_network_interface" "myterraformnic" {
 
 # Connect the security group to the network interface
 resource "azurerm_network_interface_security_group_association" "example" {
-    count                     = 3
+    count                     = 2
     network_interface_id      = azurerm_network_interface.myterraformnic[count.index].id #81 line "myterraformnic"
     network_security_group_id = azurerm_network_security_group.myterraformnsg.id # 58 line"myterraformnsg"
 }
@@ -120,7 +132,7 @@ resource "azurerm_storage_account" "mystorageaccount" {
 
 # Create virtual machines
 resource "azurerm_linux_virtual_machine" "myterraformvm" {
-    count                 = 3
+    count                 = 2
     name                  = "prd-vm${count.index}-eastus-crashcourse"
     location              = "eastus"
     resource_group_name   = azurerm_resource_group.myterraformgroup.name #16 line myterraformgroup
