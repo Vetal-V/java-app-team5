@@ -19,7 +19,9 @@ pipeline {
   stages {
     stage('Check ansible') {
       steps {
-        // slackSend (color: '#FFFF00', message: "STARTED: Pipeline2 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL})")
+        script{
+          IP_ADDRESS = sh (script: 'az vm show -d -g prd-vm-rg-eastus-crashcourse  -n prd-vm0-eastus-crashcourse  --query publicIps -o tsv', returnStdout: true)
+        }
         sh "git checkout '${TARGET_BRANCH_NAME}'"
         sh "ansible --version"
         deleteDir() // Clean up the workspace
@@ -88,13 +90,16 @@ pipeline {
           cd ./ansible_tomcat/
           ansible-playbook -i hosts tomcat.yml
         """
-
-        script{
-          IP_ADDRESS = sh (script: 'az vm show -d -g prd-vm-rg-eastus-crashcourse  -n prd-vm0-eastus-crashcourse  --query publicIps -o tsv', returnStdout: true)
-        }
-        echo "Ip address: http://${IP_ADDRESS.substring(0, IP_ADDRESS.length()-1)}:8080/app"
       }
     }
   }
+  post {
+    success {
+      slackSend(color: '#00FF00', message: "SUCCESS: Pipeline2 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). The environment was successfully configured. Visit website: http://${IP_ADDRESS.substring(0, IP_ADDRESS.length()-1)}:8080/app")
+    }
 
+    failure {
+      slackSend(color: '#FF0000', message: "FAILED: Pipeline2 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). The environment was not configured.")
+    }
+  }
 }
