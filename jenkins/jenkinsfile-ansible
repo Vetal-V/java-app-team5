@@ -80,13 +80,4 @@ pipeline {
       }
     }
   }
-/*  post {
-    success {
-      slackSend(color: '#00FF00', message: "SUCCESS: Pipeline2 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). The environment was successfully configured. Visit websites: `az vm show -d -g prd-vm-rg-eastus-crashcourse  -n prd-vm0-eastus-crashcourse  --query publicIps -o tsv`:8080/app")
-    }
-
-    failure {
-      slackSend(color: '#FF0000', message: "FAILED: Pipeline2 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). The environment was not configured.")
-    }
-  } */
 }
