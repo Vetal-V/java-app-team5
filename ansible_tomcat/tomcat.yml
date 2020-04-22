@@ -71,7 +71,7 @@
       mode: 0644
 
   - name: Unzip app to webapps Tomcat
-    command: cd /opt/tomcat/webapps/ && pwd && sudo jar -xvf tomcat.war
+    command: cd /opt/tomcat/webapps/ && pwd
     register: mymotd
 
 
