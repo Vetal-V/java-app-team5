@@ -11,7 +11,7 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "crashdb_rg" {
-  name     = "prd-sqlserver-rg-eastus-crashcourse"
+  name     = "prd-crashdb-rg-eastus-crashcourse"
   location = "eastus"
 }
 
@@ -34,4 +34,12 @@ resource "azurerm_sql_firewall_rule" "crashdb_firewall_rule" {
   server_name         = azurerm_sql_server.crashdb_sql_server.name
   start_ip_address    = "0.0.0.0"
   end_ip_address      = "255.255.255.255"
+}
+
+resource "azurerm_storage_account" "crashdb_sa" {
+  name                     = "crashdbsa"
+  resource_group_name      = azurerm_resource_group.crashdb_rg.name
+  location                 = azurerm_resource_group.crashdb_rg.location
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
 }
