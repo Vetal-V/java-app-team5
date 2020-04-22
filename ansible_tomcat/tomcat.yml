@@ -68,10 +68,10 @@
       dest: /opt/tomcat/webapps/tomcat.war
       owner: tomcat
       group: tomcat
-      mode: "u+rwx,g+rx,o=rx"
+      mode: 0644
 
   - name: Unzip app to webapps Tomcat
-    command: cd /opt/tomcat/webapps/ && jar -xvf tomcat.war
+    command: cd /opt/tomcat/webapps/ && pwd && sudo jar -xvf tomcat.war
     register: mymotd
 
 
