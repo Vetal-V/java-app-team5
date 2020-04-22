@@ -12,8 +12,8 @@ container="container-$randomIdentifier"
 bacpac="crashdb.bacpac"
 
 # for admin of sql server
-login="crashadmin"
-password="wPZ5GX%517@h*8E2u"
+login="LOGINVALUE"
+password="PASSWORDVALUE"
 
 # Creating $container on $storage
 key=$(az storage account keys list --account-name $storage --resource-group $resource -o json --query [0].value | tr -d '"')

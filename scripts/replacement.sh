@@ -1,10 +1,10 @@
 #!/bin/bash
 
 file='web.xml'
-hostip='somehostvalue'
-dbname='somedbnamevalue'
-user='someuservalue'
-password='somepasswordvalue'
+hostip='HOSTVALUE'
+dbname='DBNAMEVALUE'
+user='LOGINVALUE'
+password='PASSWORDVALUE'
 
 sed -i "s/host-ip-value/$hostip/" $file
 sed -i "s/dbname-value/$dbname/" $file
