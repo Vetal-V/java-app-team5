@@ -1,10 +1,10 @@
 #!/bin/bash
 
 file='web.xml'
-hostip='somehostvalue'
-dbname='somedbnamevalue'
-user='someuservalue'
-password='somepasswordvalue'
+hostip='prd-sqlserver-eastus-crashcourse.database.windows.net'
+dbname='prd-sqldb-eastus-crashcourse'
+user='LOGINVALUE'
+password='PASSWORDVALUE'
 
 sed -i "s/host-ip-value/$hostip/" $file
 sed -i "s/dbname-value/$dbname/" $file
