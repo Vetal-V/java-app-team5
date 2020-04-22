@@ -71,7 +71,7 @@
       mode: "u+rwx,g+rx,o=rx"
 
   - name: Unzip app to webapps Tomcat
-    command: jar -xvf /opt/tomcat/webapps/tomcat.war
+    command: cd /opt/tomcat/webapps/ && jar -xvf tomcat.war
     register: mymotd
 
 
