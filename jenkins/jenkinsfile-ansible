@@ -41,15 +41,21 @@ pipeline {
 
     stage('Restore database') {
       steps {
-        withCredentials([file(credentialsId: 'backup_db', variable: 'backup_db')]) {
-          withCredentials([usernamePassword(credentialsId: 'db_loginpass', usernameVariable: 'LOGIN_DB1', passwordVariable: 'PASSWORD_DB1')]) {
-            sh """
-              cp $backup_db ./scripts/crashdb.bacpac
-              cd ./scripts/
-              sed -i "s/LOGINVALUE/$LOGIN_DB1/" restore_db.sh
-              sed -i "s/PASSWORDVALUE/$PASSWORD_DB1/" restore_db.sh
-              ./restore_db.sh
-            """
+        script {
+          withCredentials([file(credentialsId: 'backup_db', variable: 'backup_db')]) {
+            withCredentials([usernamePassword(credentialsId: 'db_loginpass', usernameVariable: 'LOGIN_DB1', passwordVariable: 'PASSWORD_DB1')]) {
+              sh """
+                cp $backup_db ./scripts/crashdb.bacpac
+                cd ./scripts/
+                sed -i "s/LOGINVALUE/$LOGIN_DB1/" restore_db.sh
+                sed -i "s/PASSWORDVALUE/$PASSWORD_DB1/" restore_db.sh
+              """
+              try {
+                sh "./scripts/restore_db.sh"
+              } catch (Exception er) {
+                echo "$err"
+              }
+            }
           }
         }
       }
@@ -79,6 +85,15 @@ pipeline {
           ansible-playbook -i hosts tomcat.yml
         """
       }
+    }
+  }
+  post {
+    success {
+      slackSend(color: '#00FF00', message: "SUCCESS: Pipeline2 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). The environment was successfully configured. Visit websites: http://`az vm show -d -g prd-vm-rg-eastus-crashcourse  -n prd-vm0-eastus-crashcourse  --query publicIps -o tsv`:8080/app")
+    }
+
+    failure {
+      slackSend(color: '#FF0000', message: "FAILED: Pipeline2 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). The environment was not configured.")
     }
   }
 }
