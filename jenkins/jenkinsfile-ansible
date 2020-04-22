@@ -41,6 +41,7 @@ pipeline {
     stage('Build artifact') {
       steps {
         sh "jar -cvf tomcat.war ./app/"
+        sh "cp tomcat.war ./ansible_tomcat/tomcat.war"
       }
     }
 
