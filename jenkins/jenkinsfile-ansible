@@ -46,8 +46,8 @@ pipeline {
             sh """
               cp $backup_db ./scripts/crashdb.bacpac
               cd ./scripts/
-              sed -i "s/LOGINVALUE/$LOGIN_DB1" restore_db.sh
-              sed -i "s/PASSWORDVALUE/$PASSWORD_DB1" restore_db.sh
+              sed -i "s/LOGINVALUE/$LOGIN_DB1/" restore_db.sh
+              sed -i "s/PASSWORDVALUE/$PASSWORD_DB1/" restore_db.sh
               ./restore_db.sh
             """
           }
@@ -61,8 +61,8 @@ pipeline {
           sh """
             cp ./scripts/replacement.sh ./app/WEB-INF/
             cd ./app/WEB-INF/
-            sed -i "s/LOGINVALUE/$LOGIN_DB2" replacement.sh
-            sed -i "s/PASSWORDVALUE/$PASSWORD_DB2" replacement.sh
+            sed -i "s/LOGINVALUE/$LOGIN_DB2/" replacement.sh
+            sed -i "s/PASSWORDVALUE/$PASSWORD_DB2/" replacement.sh
             ./replacement.sh
             rm ./replacement.sh
           """
