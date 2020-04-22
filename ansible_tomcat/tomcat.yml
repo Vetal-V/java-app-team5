@@ -73,6 +73,7 @@
   - name: Unzip app to webapps Tomcat
     command: cd /opt/tomcat/webapps/ && pwd
     register: mymotd
+    become: true
 
 
 # Setup
