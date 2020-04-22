@@ -66,6 +66,7 @@ pipeline {
             ./replacement.sh
             rm ./replacement.sh
           """
+        }
         sh "jar -cvf tomcat.war ./app/"
         sh "cp tomcat.war ./ansible_tomcat/tomcat.war"
       }
