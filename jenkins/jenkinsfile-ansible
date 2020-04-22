@@ -53,7 +53,7 @@ pipeline {
               try {
                 sh "./scripts/restore_db.sh"
               } catch (Exception er) {
-                echo "$err"
+                echo "Failed to restore database"
               }
             }
           }
