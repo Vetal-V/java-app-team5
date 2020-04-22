@@ -92,7 +92,7 @@ pipeline {
         script{
           IP_ADDRESS = sh (script: 'az vm show -d -g prd-vm-rg-eastus-crashcourse  -n prd-vm0-eastus-crashcourse  --query publicIps -o tsv', returnStdout: true)
         }
-        echo "Ip address: http://${IP_ADDRESS.substring(1, IP_ADDRESS.length()-1)}:8080/app"
+        echo "Ip address: http://${IP_ADDRESS.substring(0, IP_ADDRESS.length()-1)}:8080/app"
       }
     }
   }
