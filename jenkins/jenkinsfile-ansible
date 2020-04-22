@@ -1,0 +1,53 @@
+#!/usr/bin/env groovy
+properties([disableConcurrentBuilds()])
+
+TARGET_BRANCH_NAME = "jenkins"
+
+pipeline {
+  agent {
+    label 'ubuntu'
+  }
+  triggers { pollSCM('* * * * *') }
+  options {
+    timestamps()
+  }
+
+  stages {
+    stage('Check ansible') {
+      steps {
+        sh "git checkout '${TARGET_BRANCH_NAME}'"
+        sh "ansible --version"
+        deleteDir() // Clean up the workspace
+        checkout scm
+      }
+    }
+
+    stage('Prepare hosts file') {
+      steps {
+        withCredentials([azureServicePrincipal('AZURE_CREDENTIALS')]) {
+          sh "az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID"
+          sh "az account set --subscription $AZURE_SUBSCRIPTION_ID"
+        }
+        withCredentials([usernamePassword(credentialsId: 'vms_loginpass', usernameVariable: 'LOGIN', passwordVariable: 'PASSWORD')]) {
+        sh """
+          cd ./ansible_tomcat/
+          echo -e "[team5]\n`az vm show -d -g prd-vm-rg-eastus-crashcourse  -n prd-vm0-eastus-crashcourse  --query publicIps -o tsv` ansible_user=$LOGIN ansible_password=$PASSWORD" > hosts
+          echo "`az vm show -d -g prd-vm-rg-eastus-crashcourse  -n prd-vm1-eastus-crashcourse  --query publicIps -o tsv` ansible_user=$LOGIN ansible_password=$PASSWORD" >> hosts
+        """
+        }
+      }
+    }
+
+    stage('Build artifact') {
+      steps {
+        jar -cvf tomcat.war ./app/
+      }
+    }
+
+    stage('Run ansible playbook') {
+      steps {
+        sh "ansible-playbook -i hosts tomcat.yml"
+      }
+    }
+  }
+}

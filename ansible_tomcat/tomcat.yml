@@ -62,6 +62,13 @@
       enabled: true
       daemon_reload: true
 
+  - name: Copy file with owner and permissions
+    copy:
+      src: ./tomcat.war
+      dest: /opt/tomcat/webapps/tomcat.war
+      owner: tomcat
+      group: tomcat
+      mode: "u+rwx,g+rx,o=rx"
 # Setup
 # ansible-playbook -i hosts tomcat.yml
 # generate ssh key on remote machines
