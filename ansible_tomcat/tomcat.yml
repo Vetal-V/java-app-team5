@@ -62,13 +62,19 @@
       enabled: true
       daemon_reload: true
 
-  - name: Copy file with owner and permissions
+  - name: Copy war file to webapps Tomcat
     copy:
       src: ./tomcat.war
       dest: /opt/tomcat/webapps/tomcat.war
       owner: tomcat
       group: tomcat
       mode: "u+rwx,g+rx,o=rx"
+
+  - name: Unzip app to webapps Tomcat
+    command: jar -xvf /opt/tomcat/webapps/tomcat.war
+    register: mymotd
+
+
 # Setup
 # ansible-playbook -i hosts tomcat.yml
 # generate ssh key on remote machines
