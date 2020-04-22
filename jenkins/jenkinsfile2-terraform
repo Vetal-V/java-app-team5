@@ -80,7 +80,7 @@ pipeline {
                 cp terraform.tfstate ~/workspace/tfstates/tfstate1
               """
               slackSend(color: '#00FF00', message: "SUCCESS: Pipeline '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). Terraform apply database success")
-            } catch ((Exception err)) {
+            } catch (Exception err) {
               slackSend(color: '#FF0000', message: "FAILED: Pipeline '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). Terraform apply virtual machines failed.")
               throw err
             }
