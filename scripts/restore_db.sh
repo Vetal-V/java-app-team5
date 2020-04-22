@@ -4,7 +4,7 @@ location="East US"
 randomIdentifier=random123
 
 resource="prd-crashdb-rg-eastus-crashcourse"
-server="prd-sqlserver-eastus-crashcourse1"
+server="prd-sqlserver-eastus-crashcourse"
 database="prd-sqldb-eastus-crashcourse"
 
 storage="crashdbsa"
