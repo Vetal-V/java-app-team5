@@ -57,7 +57,10 @@ pipeline {
                 sed -i "s/PASSWORDVALUE/$PASSWORD_DB1/" restore_db.sh
               """
               try {
-                sh "./scripts/restore_db.sh"
+                sh """
+                  cd ./scripts/
+                  ./restore_db.sh"
+                """
               } catch (Exception er) {
                 echo "Failed to restore database"
               }
