@@ -101,7 +101,7 @@ pipeline {
               sudo terraform apply -no-color vm_plan.out
               cp terraform.tfstate ~/workspace/tfstates/tfstate2
             """
-            slackSend(color: '#00FF00', message: "SUCCESS: Pipeline1 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). Terraform apply database success.")
+            slackSend(color: '#00FF00', message: "SUCCESS: Pipeline1 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). Terraform apply virtual machines success.")
           } catch (Exception err){
             try {
               sh """
@@ -112,7 +112,7 @@ pipeline {
                 sudo terraform apply -no-color vm_plan.out
                 cp terraform.tfstate ~/workspace/tfstates/tfstate2
               """
-              slackSend(color: '#00FF00', message: "SUCCESS: Pipeline1 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). Terraform apply database success.")
+              slackSend(color: '#00FF00', message: "SUCCESS: Pipeline1 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). Terraform apply virtual machines success.")
             } catch (Exception er){
               slackSend(color: '#FF0000', message: "FAILED: Pipeline1 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). Terraform apply virtual machines failed.")
               throw er
