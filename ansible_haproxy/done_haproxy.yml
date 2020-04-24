@@ -1,0 +1,31 @@
+- hosts: all
+
+  become: yes
+  become_method: sudo
+  remote_user: ubuntu
+
+  tasks:
+  - name: Update and upgrade apt packages
+    apt:
+      upgrade: yes
+      update_cache: yes
+      cache_valid_time: 86400 #One day
+
+  - name: install haproxy
+    apt:
+      name: haproxy
+      state: present
+
+  - name: git clone
+    command: git clone https://github.com/Vetal-V/java-app-team5.git
+
+
+  - name: enter to cloned directory path
+    command: chdir=java-app-team5 ls
+    command: mv java-app-team5/haproxy.cfg  /etc/haproxy/haproxy.cfg
+
+  - name: restart haproxy
+    command: sudo service haproxy restart
+
+  - name: delete repository
+    command: sudo rm -r -f java-app-team5/
