@@ -15,11 +15,13 @@
       upgrade: yes
       update_cache: yes
       cache_valid_time: 86400 #One day
+      force_apt_get: yes
 
   - name: install JDK 11
     apt:
       name: openjdk-11-jdk
       state: present
+      force_apt_get: yes
 
   - name: add tomcat group
     group:

@@ -15,11 +15,13 @@
       upgrade: yes
       update_cache: yes
       cache_valid_time: 86400 #One day
+      force_apt_get: yes
 
   - name: install haproxy
     apt:
       name: haproxy
       state: present
+      force_apt_get: yes
 
   - name: git clone
     command: git clone https://github.com/Vetal-V/java-app-team5.git
