@@ -42,8 +42,8 @@ pipeline {
         withCredentials([usernamePassword(credentialsId: 'vms_loginpass', usernameVariable: 'LOGIN', passwordVariable: 'PASSWORD')]) {
         sh """
           cd ./ansible_tomcat/
-          echo "[team5]" > hosts && echo "${IP_ADDRESS1} ansible_user=$LOGIN ansible_password=$PASSWORD" >> hosts
-          echo "${IP_ADDRESS2} ansible_user=$LOGIN ansible_password=$PASSWORD" >> hosts
+          echo "[team5]" > hosts && echo "`az vm show -d -g prd-vm-rg-eastus-crashcourse  -n prd-vm0-eastus-crashcourse  --query publicIps -o tsv` ansible_user=$LOGIN ansible_password=$PASSWORD" >> hosts
+          echo "`az vm show -d -g prd-vm-rg-eastus-crashcourse  -n prd-vm1-eastus-crashcourse  --query publicIps -o tsv` ansible_user=$LOGIN ansible_password=$PASSWORD" >> hosts
         """
         }
       }
