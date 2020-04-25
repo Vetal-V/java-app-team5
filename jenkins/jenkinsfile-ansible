@@ -109,6 +109,7 @@ pipeline {
             cd ./ansible_haproxy/
             echo "[team5]" > hosts && echo "${IP_ADDRESS1} ansible_user=$LOGIN ansible_password=$PASSWORD" >> hosts
             echo "${IP_ADDRESS2} ansible_user=$LOGIN ansible_password=$PASSWORD" >> hosts
+            sudo cp ../haproxy.cfg ./haproxy.cfg
             ansible-playbook -i hosts done_haproxy.yml
           """
         }
