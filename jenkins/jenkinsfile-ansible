@@ -12,9 +12,9 @@ pipeline {
     timestamps()
   }
 
-  environment {
-    IP_ADDRESS = ' '
-  }
+  //environment {
+   // IP_ADDRESS = ' '
+  //}
 
   stages {
     stage('Check ansible') {
