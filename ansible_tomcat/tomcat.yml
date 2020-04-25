@@ -3,6 +3,9 @@
   become: yes
   become_method: sudo
   remote_user: ubuntu
+  module_defaults:
+    apt:
+      force_apt_get: yes
 
   tasks:
   - name: Update and upgrade apt packages
