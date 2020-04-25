@@ -27,6 +27,8 @@
     copy:
       src: ./haproxy.cfg
       dest: /etc/haproxy/haproxy.cfg
+      owner: tomcat
+      group: tomcat
       mode: 0644
 
   - name: restart haproxy
