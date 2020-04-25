@@ -32,4 +32,4 @@
       mode: 0644
 
   - name: restart haproxy
-    command: sudo service haproxy restart
+    service: name=haproxy state=restarted
