@@ -73,9 +73,9 @@
     copy:
       src: ./tomcat.war
       dest: /opt/tomcat/webapps/tomcat.war
-      owner: tomcat
-      group: tomcat
-      mode: 0644
+      owner: root
+      group: root
+      mode: 0755
 
   - name: Unzip app to webapps Tomcat
     shell:
