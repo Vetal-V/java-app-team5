@@ -3,11 +3,13 @@
   become: yes
   become_method: sudo
   remote_user: ubuntu
-  module_defaults:
-    apt:
-      force_apt_get: yes
 
   tasks:
+  - name: "APT: Install aptitude package"
+    apt:
+      name: aptitude
+      force_apt_get: yes
+
   - name: Update and upgrade apt packages
     apt:
       upgrade: yes
