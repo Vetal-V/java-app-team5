@@ -106,7 +106,7 @@ pipeline {
             sudo rm tomcat.war
             echo "[team5]" > hosts && echo "${IP_ADDRESS_VM2} ansible_user=$LOGIN ansible_password=$PASSWORD" >> hosts
             cd ../app/
-            sed -i "s/You Don't have an account?/VM2 You Don't have an account?/" index.jsp
+            sed -i "s/VM1 You Don't have an account?/VM2 You Don't have an account?/" index.jsp
             cd .. && jar -cvf tomcat.war ./app/
             cp tomcat.war ./ansible_tomcat/tomcat.war
             cd ./ansible_tomcat/
