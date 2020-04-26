@@ -45,7 +45,7 @@ resource "azurerm_subnet" "myterraformsubnet" {
 
 # Create public IPs
 resource "azurerm_public_ip" "myterraformpublicip" {
-    count                        = 2
+    count                        = 3
     name                         = "prd-publicip${count.index}-eastus-crashcourse"
     location                     = "eastus"
     resource_group_name          = azurerm_resource_group.myterraformgroup.name #16 line "myterraformgroup"
@@ -61,6 +61,18 @@ resource "azurerm_network_security_group" "myterraformnsg" {
     name                = "prd-network-sg-eastus-crashcourse"
     location            = "eastus"
     resource_group_name = azurerm_resource_group.myterraformgroup.name
+
+    security_rule {
+        name                       = "HTTP"
+        priority                   = 1000
+        direction                  = "Inbound"
+        access                     = "Allow"
+        protocol                   = "Any"
+        source_port_range          = "*"
+        destination_port_range     = "80"
+        source_address_prefix      = "*"
+        destination_address_prefix = "*"
+    }
 
     security_rule {
         name                       = "SSH"
@@ -86,6 +98,18 @@ resource "azurerm_network_security_group" "myterraformnsg" {
         destination_address_prefix = "*"
     }
 
+    security_rule {
+        name                       = "Haproxy_stats"
+        priority                   = 1003
+        direction                  = "Inbound"
+        access                     = "Allow"
+        protocol                   = "Any"
+        source_port_range          = "*"
+        destination_port_range     = "32700"
+        source_address_prefix      = "*"
+        destination_address_prefix = "*"
+    }
+
     tags = {
         environment = "Terraform Demo"
     }
@@ -93,7 +117,7 @@ resource "azurerm_network_security_group" "myterraformnsg" {
 
 # Create network interface
 resource "azurerm_network_interface" "myterraformnic" {
-    count               = 2
+    count               = 3
     name                = "prd-nic${count.index}-eastus-crashcourse"
     location            = "eastus"
     resource_group_name = azurerm_resource_group.myterraformgroup.name #16 line "myterraformgroup"
@@ -112,7 +136,7 @@ resource "azurerm_network_interface" "myterraformnic" {
 
 # Connect the security group to the network interface
 resource "azurerm_network_interface_security_group_association" "example" {
-    count                     = 2
+    count                     = 3
     network_interface_id      = azurerm_network_interface.myterraformnic[count.index].id #81 line "myterraformnic"
     network_security_group_id = azurerm_network_security_group.myterraformnsg.id # 58 line"myterraformnsg"
 }
@@ -132,7 +156,7 @@ resource "azurerm_storage_account" "mystorageaccount" {
 
 # Create virtual machines
 resource "azurerm_linux_virtual_machine" "myterraformvm" {
-    count                 = 2
+    count                 = 3
     name                  = "prd-vm${count.index}-eastus-crashcourse"
     location              = "eastus"
     resource_group_name   = azurerm_resource_group.myterraformgroup.name #16 line myterraformgroup
