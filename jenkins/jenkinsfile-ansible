@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 properties([disableConcurrentBuilds()])
 
-TARGET_BRANCH_NAME = "master"
+TARGET_BRANCH_NAME = "jenkins-dev5"
 
 pipeline {
   agent {
@@ -13,14 +13,21 @@ pipeline {
   }
 
   environment {
-    IP_ADDRESS = ' '
+    IP_ADDRESS_VM1 = ''
+    IP_ADDRESS_VM2 = ''
+    IP_ADDRESS_HAPROXY = ''
   }
 
   stages {
     stage('Check ansible') {
       steps {
-        script{
-          IP_ADDRESS = sh (script: 'az vm show -d -g prd-vm-rg-eastus-crashcourse  -n prd-vm0-eastus-crashcourse  --query publicIps -o tsv', returnStdout: true)
+        script {
+          IP_ADDRESS_VM1 = sh (script: 'az vm show -d -g prd-vm-rg-eastus-crashcourse  -n prd-vm0-eastus-crashcourse  --query publicIps -o tsv', returnStdout: true)
+          IP_ADDRESS_VM2 = sh (script: 'az vm show -d -g prd-vm-rg-eastus-crashcourse  -n prd-vm1-eastus-crashcourse  --query publicIps -o tsv', returnStdout: true)
+          IP_ADDRESS_HAPROXY = sh (script: 'az vm show -d -g prd-vm-rg-eastus-crashcourse  -n prd-vm2-eastus-crashcourse  --query publicIps -o tsv', returnStdout: true)
+          IP_ADDRESS_VM1 = IP_ADDRESS_VM1.substring(0, IP_ADDRESS_VM1.length()-1)
+          IP_ADDRESS_VM2 = IP_ADDRESS_VM2.substring(0, IP_ADDRESS_VM2.length()-1)
+          IP_ADDRESS_HAPROXY = IP_ADDRESS_HAPROXY.substring(0, IP_ADDRESS_HAPROXY.length()-1)
         }
         sh "git checkout '${TARGET_BRANCH_NAME}'"
         sh "ansible --version"
@@ -36,11 +43,11 @@ pipeline {
           sh "az account set --subscription $AZURE_SUBSCRIPTION_ID"
         }
         withCredentials([usernamePassword(credentialsId: 'vms_loginpass', usernameVariable: 'LOGIN', passwordVariable: 'PASSWORD')]) {
-        sh """
-          cd ./ansible_tomcat/
-          echo "[team5]" > hosts && echo "`az vm show -d -g prd-vm-rg-eastus-crashcourse  -n prd-vm0-eastus-crashcourse  --query publicIps -o tsv` ansible_user=$LOGIN ansible_password=$PASSWORD" >> hosts
-          echo "`az vm show -d -g prd-vm-rg-eastus-crashcourse  -n prd-vm1-eastus-crashcourse  --query publicIps -o tsv` ansible_user=$LOGIN ansible_password=$PASSWORD" >> hosts
-        """
+          sh """
+            cd ./ansible_tomcat/
+            echo "[team5]" > hosts && echo "${IP_ADDRESS_VM1} ansible_user=$LOGIN ansible_password=$PASSWORD" >> hosts
+            // echo "${IP_ADDRESS_VM2} ansible_user=$LOGIN ansible_password=$PASSWORD" >> hosts
+          """
         }
       }
     }
@@ -59,7 +66,7 @@ pipeline {
               try {
                 sh """
                   cd ./scripts/
-                  ./restore_db.sh"
+                  ./restore_db.sh
                 """
               } catch (Exception er) {
                 echo "Failed to restore database"
@@ -82,6 +89,10 @@ pipeline {
             rm ./replacement.sh
           """
         }
+        sh """
+          cd ./app/
+          sed -i "s/You Don't have an account?/VM1 You Don't have an account?/" index.jsp
+        """
         sh "jar -cvf tomcat.war ./app/"
         sh "cp tomcat.war ./ansible_tomcat/tomcat.war"
       }
@@ -89,20 +100,36 @@ pipeline {
 
     stage('Run ansible playbook') {
       steps {
-        sh """
-          cd ./ansible_tomcat/
-          ansible-playbook -i hosts tomcat.yml
-        """
+        withCredentials([usernamePassword(credentialsId: 'vms_loginpass', usernameVariable: 'LOGIN', passwordVariable: 'PASSWORD')]) {
+          sh """
+            cd ./ansible_tomcat/
+            ansible-playbook -i hosts tomcat.yml
+            sudo rm tomcat.war
+            echo "[team5]" > hosts && echo "${IP_ADDRESS_VM2} ansible_user=$LOGIN ansible_password=$PASSWORD" >> hosts
+            cd ../app/
+            sed -i "s/You Don't have an account?/VM2 You Don't have an account?/" index.jsp
+            cd .. && jar -cvf tomcat.war ./app/
+            cp tomcat.war ./ansible_tomcat/tomcat.war
+            cd ./ansible_tomcat/
+            ansible-playbook -i hosts tomcat.yml
+          """
+        }
       }
     }
-  }
-  post {
-    success {
-      slackSend(color: '#00FF00', message: "SUCCESS: Pipeline2 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). The environment was successfully configured. Visit website: http://${IP_ADDRESS.substring(0, IP_ADDRESS.length()-1)}:8080/app")
-    }
 
-    failure {
-      slackSend(color: '#FF0000', message: "FAILED: Pipeline2 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). The environment was not configured.")
+    stage('Run load balancer') {
+      steps {
+        withCredentials([usernamePassword(credentialsId: 'vms_loginpass', usernameVariable: 'LOGIN', passwordVariable: 'PASSWORD')]) {
+          sh """
+            sed -i "s/192.168.1.3/${IP_ADDRESS_VM1}/" haproxy.cfg
+            sed -i "s/192.168.1.4/${IP_ADDRESS_VM1}/" haproxy.cfg
+            cd ./ansible_haproxy/
+            echo "[team5]" > hosts && echo "${IP_ADDRESS_HAPROXY} ansible_user=$LOGIN ansible_password=$PASSWORD" >> hosts
+            sudo cp ../haproxy.cfg ./haproxy.cfg
+            ansible-playbook -i hosts done_haproxy.yml
+          """
+        }
+      }
     }
   }
 }
