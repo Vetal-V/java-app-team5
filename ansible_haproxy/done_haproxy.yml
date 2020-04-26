@@ -16,16 +16,14 @@
       name: haproxy
       state: present
 
-  - name: git clone
-    command: git clone https://github.com/Vetal-V/java-app-team5.git
-
-
-  - name: enter to cloned directory path
-    command: chdir=java-app-team5 ls
-    command: mv java-app-team5/haproxy.cfg  /etc/haproxy/haproxy.cfg
+  - name: Copy haproxy.cfg
+    copy:
+      src: ./haproxy.cfg
+      dest: /etc/haproxy/haproxy.cfg
+      owner: root
+      group: root
+      mode: 0644
 
   - name: restart haproxy
     command: sudo service haproxy restart
 
-  - name: delete repository
-    command: sudo rm -r -f java-app-team5/
