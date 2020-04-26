@@ -119,14 +119,18 @@ pipeline {
     stage('Run load balancer') {
       steps {
         withCredentials([usernamePassword(credentialsId: 'vms_loginpass', usernameVariable: 'LOGIN', passwordVariable: 'PASSWORD')]) {
-          sh """
-            sed -i "s/192.168.1.3/${IP_ADDRESS_VM1}/" haproxy.cfg
-            sed -i "s/192.168.1.4/${IP_ADDRESS_VM1}/" haproxy.cfg
-            cd ./ansible_haproxy/
-            echo "[team5]" > hosts && echo "${IP_ADDRESS_HAPROXY} ansible_user=$LOGIN ansible_password=$PASSWORD" >> hosts
-            sudo cp ../haproxy.cfg ./haproxy.cfg
-            ansible-playbook -i hosts done_haproxy.yml
-          """
+          withCredentials([usernamePassword(credentialsId: 'haproxy_stats', usernameVariable: 'LOGIN_HAP', passwordVariable: 'PASSWORD_HAP')]) {
+            sh """
+              sed -i "s/192.168.1.3/${IP_ADDRESS_VM1}/" haproxy.cfg
+              sed -i "s/192.168.1.4/${IP_ADDRESS_VM1}/" haproxy.cfg
+              sed -i "s/someuser/$LOGIN_HAP/" haproxy.cfg
+              sed -i "s/password/$PASSWORD_HAP/" haproxy.cfg
+              cd ./ansible_haproxy/
+              echo "[team5]" > hosts && echo "${IP_ADDRESS_HAPROXY} ansible_user=$LOGIN ansible_password=$PASSWORD" >> hosts
+              sudo cp ../haproxy.cfg ./haproxy.cfg
+              ansible-playbook -i hosts done_haproxy.yml
+            """
+          }
         }
       }
     }
