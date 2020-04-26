@@ -46,7 +46,6 @@ pipeline {
           sh """
             cd ./ansible_tomcat/
             echo "[team5]" > hosts && echo "${IP_ADDRESS_VM1} ansible_user=$LOGIN ansible_password=$PASSWORD" >> hosts
-            // echo "${IP_ADDRESS_VM2} ansible_user=$LOGIN ansible_password=$PASSWORD" >> hosts
           """
         }
       }
