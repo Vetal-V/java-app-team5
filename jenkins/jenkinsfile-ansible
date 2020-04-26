@@ -137,7 +137,7 @@ pipeline {
   }
   post {
     success {
-      slackSend(color: '#00FF00', message: "SUCCESS: Pipeline2 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). The environment was successfully configured. Visit website: http:/${IP_ADDRESS_HAPROXY}/app")
+      slackSend(color: '#00FF00', message: "SUCCESS: Pipeline2 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). The environment was successfully configured. Visit website: http://${IP_ADDRESS_HAPROXY}/app")
     }
 
     failure {
