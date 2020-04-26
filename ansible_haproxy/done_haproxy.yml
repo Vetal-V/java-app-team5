@@ -20,8 +20,8 @@
     copy:
       src: ./haproxy.cfg
       dest: /etc/haproxy/haproxy.cfg
-      owner: tomcat
-      group: tomcat
+      owner: root
+      group: root
       mode: 0644
 
   - name: restart haproxy
