@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 properties([disableConcurrentBuilds()])
 
-TARGET_BRANCH_NAME = "master"
+TARGET_BRANCH_NAME = "jenkins-dev5"
 
 pipeline {
   agent {

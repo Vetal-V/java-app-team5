@@ -5,16 +5,23 @@
   remote_user: ubuntu
 
   tasks:
+  - name: "APT: Install aptitude package"
+    apt:
+      name: aptitude
+      force_apt_get: yes
+
   - name: Update and upgrade apt packages
     apt:
       upgrade: yes
       update_cache: yes
       cache_valid_time: 86400 #One day
+      force_apt_get: yes
 
   - name: install haproxy
     apt:
       name: haproxy
       state: present
+      force_apt_get: yes
 
   - name: Copy haproxy.cfg
     copy:
