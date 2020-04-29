@@ -20,10 +20,25 @@ pipeline {
         deleteDir() // Clean up the workspace
         checkout scm
         withCredentials([string(credentialsId: 'email-dev1', variable: 'email1')]) {
-          sh """
-            cd ./monitor/
-            sudo sed -i "s/somemail1/$email1/" alertDashboard.tf
-          """
+          withCredentials([string(credentialsId: 'email-dev2', variable: 'email2')]) {
+            withCredentials([string(credentialsId: 'email-dev3', variable: 'email3')]) {
+              withCredentials([string(credentialsId: 'email-dev4', variable: 'email4')]) {
+                withCredentials([string(credentialsId: 'email-dev5', variable: 'email5')]) {
+                  withCredentials([string(credentialsId: 'sub-id-azure', variable: 'sub-id')]) {
+                    sh """
+                      cd ./monitor/
+                      sudo sed -i "s/somemail1/$email1/" alertDashboard.tf
+                      sudo sed -i "s/somemail2/$email2/" alertDashboard.tf
+                      sudo sed -i "s/somemail3/$email3/" alertDashboard.tf
+                      sudo sed -i "s/somemail4/$email4/" alertDashboard.tf
+                      sudo sed -i "s/somemail5/$email5/" alertDashboard.tf
+                      sudo sed -i "s/00000000-0000-0000-0000-000000000000/$sub-id/" alertDashboard.tf
+                    """
+                  }
+                }
+              }
+            }
+          }
         }
         withCredentials([file(credentialsId: 'vm_variables', variable: 'monit_variables')]) {
           sh "sudo cp $monit_variables ./monitor/variables.tf"

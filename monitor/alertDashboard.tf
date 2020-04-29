@@ -268,7 +268,7 @@ resource "azurerm_dashboard" "my-board" {
                       "metrics": [
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm2-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm2-eastus-crashcourse"
                           },
                           "name": "Percentage CPU",
                           "aggregationType": 4,
@@ -299,7 +299,7 @@ resource "azurerm_dashboard" "my-board" {
                       "metrics": [
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm2-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm2-eastus-crashcourse"
                           },
                           "name": "Percentage CPU",
                           "aggregationType": 4,
@@ -353,7 +353,7 @@ resource "azurerm_dashboard" "my-board" {
                       "metrics": [
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm0-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm0-eastus-crashcourse"
                           },
                           "name": "Percentage CPU",
                           "aggregationType": 4,
@@ -384,7 +384,7 @@ resource "azurerm_dashboard" "my-board" {
                       "metrics": [
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm0-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm0-eastus-crashcourse"
                           },
                           "name": "Percentage CPU",
                           "aggregationType": 4,
@@ -438,7 +438,7 @@ resource "azurerm_dashboard" "my-board" {
                       "metrics": [
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm1-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm1-eastus-crashcourse"
                           },
                           "name": "Percentage CPU",
                           "aggregationType": 4,
@@ -469,7 +469,7 @@ resource "azurerm_dashboard" "my-board" {
                       "metrics": [
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm1-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm1-eastus-crashcourse"
                           },
                           "name": "Percentage CPU",
                           "aggregationType": 4,
@@ -553,7 +553,7 @@ resource "azurerm_dashboard" "my-board" {
                       "metrics": [
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm2-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm2-eastus-crashcourse"
                           },
                           "name": "Network In Total",
                           "aggregationType": 1,
@@ -564,7 +564,7 @@ resource "azurerm_dashboard" "my-board" {
                         },
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm2-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm2-eastus-crashcourse"
                           },
                           "name": "Network Out Total",
                           "aggregationType": 1,
@@ -595,7 +595,7 @@ resource "azurerm_dashboard" "my-board" {
                       "metrics": [
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm2-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm2-eastus-crashcourse"
                           },
                           "name": "Network In Total",
                           "aggregationType": 1,
@@ -606,7 +606,7 @@ resource "azurerm_dashboard" "my-board" {
                         },
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm2-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm2-eastus-crashcourse"
                           },
                           "name": "Network Out Total",
                           "aggregationType": 1,
@@ -660,7 +660,7 @@ resource "azurerm_dashboard" "my-board" {
                       "metrics": [
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm0-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm0-eastus-crashcourse"
                           },
                           "name": "Network In Total",
                           "aggregationType": 1,
@@ -671,7 +671,7 @@ resource "azurerm_dashboard" "my-board" {
                         },
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm0-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm0-eastus-crashcourse"
                           },
                           "name": "Network Out Total",
                           "aggregationType": 1,
@@ -702,7 +702,7 @@ resource "azurerm_dashboard" "my-board" {
                       "metrics": [
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm0-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm0-eastus-crashcourse"
                           },
                           "name": "Network In Total",
                           "aggregationType": 1,
@@ -713,7 +713,7 @@ resource "azurerm_dashboard" "my-board" {
                         },
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm0-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm0-eastus-crashcourse"
                           },
                           "name": "Network Out Total",
                           "aggregationType": 1,
@@ -767,7 +767,7 @@ resource "azurerm_dashboard" "my-board" {
                       "metrics": [
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm1-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm1-eastus-crashcourse"
                           },
                           "name": "Network In Total",
                           "aggregationType": 1,
@@ -778,7 +778,7 @@ resource "azurerm_dashboard" "my-board" {
                         },
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm1-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm1-eastus-crashcourse"
                           },
                           "name": "Network Out Total",
                           "aggregationType": 1,
@@ -809,7 +809,7 @@ resource "azurerm_dashboard" "my-board" {
                       "metrics": [
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm1-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm1-eastus-crashcourse"
                           },
                           "name": "Network In Total",
                           "aggregationType": 1,
@@ -820,7 +820,7 @@ resource "azurerm_dashboard" "my-board" {
                         },
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm1-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm1-eastus-crashcourse"
                           },
                           "name": "Network Out Total",
                           "aggregationType": 1,
@@ -874,7 +874,7 @@ resource "azurerm_dashboard" "my-board" {
                       "metrics": [
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm2-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm2-eastus-crashcourse"
                           },
                           "name": "Disk Read Bytes",
                           "aggregationType": 1,
@@ -885,7 +885,7 @@ resource "azurerm_dashboard" "my-board" {
                         },
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm2-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm2-eastus-crashcourse"
                           },
                           "name": "Disk Write Bytes",
                           "aggregationType": 1,
@@ -916,7 +916,7 @@ resource "azurerm_dashboard" "my-board" {
                       "metrics": [
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm2-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm2-eastus-crashcourse"
                           },
                           "name": "Disk Read Bytes",
                           "aggregationType": 1,
@@ -927,7 +927,7 @@ resource "azurerm_dashboard" "my-board" {
                         },
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm2-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm2-eastus-crashcourse"
                           },
                           "name": "Disk Write Bytes",
                           "aggregationType": 1,
@@ -981,7 +981,7 @@ resource "azurerm_dashboard" "my-board" {
                       "metrics": [
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm0-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm0-eastus-crashcourse"
                           },
                           "name": "Disk Read Bytes",
                           "aggregationType": 1,
@@ -992,7 +992,7 @@ resource "azurerm_dashboard" "my-board" {
                         },
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm0-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm0-eastus-crashcourse"
                           },
                           "name": "Disk Write Bytes",
                           "aggregationType": 1,
@@ -1023,7 +1023,7 @@ resource "azurerm_dashboard" "my-board" {
                       "metrics": [
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm0-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm0-eastus-crashcourse"
                           },
                           "name": "Disk Read Bytes",
                           "aggregationType": 1,
@@ -1034,7 +1034,7 @@ resource "azurerm_dashboard" "my-board" {
                         },
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm0-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm0-eastus-crashcourse"
                           },
                           "name": "Disk Write Bytes",
                           "aggregationType": 1,
@@ -1088,7 +1088,7 @@ resource "azurerm_dashboard" "my-board" {
                       "metrics": [
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm1-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm1-eastus-crashcourse"
                           },
                           "name": "Disk Read Bytes",
                           "aggregationType": 1,
@@ -1099,7 +1099,7 @@ resource "azurerm_dashboard" "my-board" {
                         },
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm1-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm1-eastus-crashcourse"
                           },
                           "name": "Disk Write Bytes",
                           "aggregationType": 1,
@@ -1130,7 +1130,7 @@ resource "azurerm_dashboard" "my-board" {
                       "metrics": [
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm1-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm1-eastus-crashcourse"
                           },
                           "name": "Disk Read Bytes",
                           "aggregationType": 1,
@@ -1141,7 +1141,7 @@ resource "azurerm_dashboard" "my-board" {
                         },
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm1-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm1-eastus-crashcourse"
                           },
                           "name": "Disk Write Bytes",
                           "aggregationType": 1,
@@ -1195,7 +1195,7 @@ resource "azurerm_dashboard" "my-board" {
                       "metrics": [
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm2-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm2-eastus-crashcourse"
                           },
                           "name": "Disk Read Operations/Sec",
                           "aggregationType": 4,
@@ -1206,7 +1206,7 @@ resource "azurerm_dashboard" "my-board" {
                         },
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm2-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm2-eastus-crashcourse"
                           },
                           "name": "Disk Write Operations/Sec",
                           "aggregationType": 4,
@@ -1237,7 +1237,7 @@ resource "azurerm_dashboard" "my-board" {
                       "metrics": [
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm2-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm2-eastus-crashcourse"
                           },
                           "name": "Disk Read Operations/Sec",
                           "aggregationType": 4,
@@ -1248,7 +1248,7 @@ resource "azurerm_dashboard" "my-board" {
                         },
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm2-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm2-eastus-crashcourse"
                           },
                           "name": "Disk Write Operations/Sec",
                           "aggregationType": 4,
@@ -1302,7 +1302,7 @@ resource "azurerm_dashboard" "my-board" {
                       "metrics": [
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm0-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm0-eastus-crashcourse"
                           },
                           "name": "Disk Read Operations/Sec",
                           "aggregationType": 4,
@@ -1313,7 +1313,7 @@ resource "azurerm_dashboard" "my-board" {
                         },
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm0-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm0-eastus-crashcourse"
                           },
                           "name": "Disk Write Operations/Sec",
                           "aggregationType": 4,
@@ -1344,7 +1344,7 @@ resource "azurerm_dashboard" "my-board" {
                       "metrics": [
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm0-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm0-eastus-crashcourse"
                           },
                           "name": "Disk Read Operations/Sec",
                           "aggregationType": 4,
@@ -1355,7 +1355,7 @@ resource "azurerm_dashboard" "my-board" {
                         },
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm0-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm0-eastus-crashcourse"
                           },
                           "name": "Disk Write Operations/Sec",
                           "aggregationType": 4,
@@ -1409,7 +1409,7 @@ resource "azurerm_dashboard" "my-board" {
                       "metrics": [
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm1-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm1-eastus-crashcourse"
                           },
                           "name": "Disk Read Operations/Sec",
                           "aggregationType": 4,
@@ -1420,7 +1420,7 @@ resource "azurerm_dashboard" "my-board" {
                         },
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm1-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm1-eastus-crashcourse"
                           },
                           "name": "Disk Write Operations/Sec",
                           "aggregationType": 4,
@@ -1451,7 +1451,7 @@ resource "azurerm_dashboard" "my-board" {
                       "metrics": [
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm1-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm1-eastus-crashcourse"
                           },
                           "name": "Disk Read Operations/Sec",
                           "aggregationType": 4,
@@ -1462,7 +1462,7 @@ resource "azurerm_dashboard" "my-board" {
                         },
                         {
                           "resourceMetadata": {
-                            "id": "/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm1-eastus-crashcourse"
+                            "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm1-eastus-crashcourse"
                           },
                           "name": "Disk Write Operations/Sec",
                           "aggregationType": 4,
