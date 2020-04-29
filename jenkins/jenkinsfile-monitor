@@ -17,10 +17,12 @@ pipeline {
     stage('Prepare terraform') {
       steps {
         deleteDir()
-        sh "git checkout '${TARGET_BRANCH_NAME}'"
+        checkout scm
         deleteDir()
+        checkout scm
         deleteDir() // Clean up the workspace
         checkout scm
+        sh "git checkout '${TARGET_BRANCH_NAME}'"
         withCredentials([string(credentialsId: 'email-dev1', variable: 'email1')]) {
           sh 'sudo sed -i "s/somemail1/$email1/" ./monitor/alertDashboard.tf'
         }
