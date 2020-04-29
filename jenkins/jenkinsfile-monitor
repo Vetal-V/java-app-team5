@@ -40,6 +40,10 @@ pipeline {
             }
           }
         }
+        withCredentials([file(credentialsId: 'vm_variables', variable: 'monit_variables')]) {
+          sh "sudo cp $monit_variables ./monitor/variables.tf"
+          sh "sudo chmod 664 ./monitor/variables.tf"
+        }
       }
     }
 
@@ -54,5 +58,4 @@ pipeline {
       }
     }
   }
-
 }
