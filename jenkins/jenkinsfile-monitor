@@ -1,0 +1,88 @@
+#!/usr/bin/env groovy
+properties([disableConcurrentBuilds()])
+
+TARGET_BRANCH_NAME = "monitor"
+
+pipeline {
+  agent {
+    label 'ubuntu'
+  }
+
+  options {
+    timestamps()
+  }
+
+
+  stages {
+    stage('Prepare terraform') {
+      steps {
+        sh "git checkout '${TARGET_BRANCH_NAME}'"
+        sh "sudo rm -rf ~/workspace/pl3-dashboard-alerts/monitor/.terraform"
+        deleteDir()
+        checkout scm
+        deleteDir()
+        checkout scm
+        withCredentials([string(credentialsId: 'email-dev1', variable: 'email1')]) {
+          sh 'sudo sed -i "s/somemail1/$email1/" ./monitor/alertDashboard.tf'
+        }
+        withCredentials([string(credentialsId: 'email-dev2', variable: 'email2')]) {
+          sh 'sudo sed -i "s/somemail2/$email2/" ./monitor/alertDashboard.tf'
+        }
+        withCredentials([string(credentialsId: 'email-dev3', variable: 'email3')]) {
+          sh 'sudo sed -i "s/somemail3/$email3/" ./monitor/alertDashboard.tf'
+        }
+        withCredentials([string(credentialsId: 'email-dev4', variable: 'email4')]) {
+          sh 'sudo sed -i "s/somemail4/$email4/" ./monitor/alertDashboard.tf'
+        }
+        withCredentials([string(credentialsId: 'email-dev5', variable: 'email5')]) {
+          sh 'sudo sed -i "s/somemail5/$email5/" ./monitor/alertDashboard.tf'
+        }
+        withCredentials([string(credentialsId: 'sub-id-azure', variable: 'subid')]) {
+          sh 'sudo sed -i "s/00000000-0000-0000-0000-000000000000/$subid/" ./monitor/alertDashboard.tf'
+        }
+        withCredentials([file(credentialsId: 'vm_variables', variable: 'monit_variables')]) {
+          sh "sudo cp $monit_variables ./monitor/variables.tf"
+          sh "sudo chmod 664 ./monitor/variables.tf"
+        }
+      }
+    }
+
+    stage('Run monitor') {
+      steps {
+        script{
+          try {
+            sh """
+              cd ./monitor/
+              sudo terraform init --get=true
+              sudo terraform plan -out=monitor.out -no-color
+              sudo terraform apply -no-color monitor.out
+              cp terraform.tfstate ~/workspace/tfstates/tfstate3
+            """
+          } catch (Exception err){
+            try {
+              sh """
+                cd ./monitor/
+                sudo cp ~/workspace/tfstates/tfstate3 ./terraform.tfstate
+                sudo chmod 664 ./terraform.tfstate
+                sudo terraform plan -out=monitor.out -no-color
+                sudo terraform apply -no-color monitor.out
+                cp terraform.tfstate ~/workspace/tfstates/tfstate3
+              """
+            } catch (Exception er){
+              throw er
+            }
+          }
+        }
+      }
+    }
+  }
+  post {
+    success {
+      slackSend(color: '#00FF00', message: "SUCCESS: Pipeline3 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). Dashboard and alerts were successfully created.")
+    }
+
+    failure {
+      slackSend(color: '#FF0000', message: "FAILED: Pipeline3 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). Dashboard and alerts were not created.")
+    }
+  }
+}
