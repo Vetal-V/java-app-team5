@@ -22,7 +22,7 @@ pipeline {
         withCredentials([string(credentialsId: 'email-dev1', variable: 'email1')]) {
           sh """
             cd ./monitor/
-            sed -i "s/somemail1/$email1/" alertDashboard.tf
+            sudo sed -i "s/somemail1/$email1/" alertDashboard.tf
           """
         }
         withCredentials([file(credentialsId: 'vm_variables', variable: 'monit_variables')]) {
