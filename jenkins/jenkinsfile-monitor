@@ -48,16 +48,27 @@ pipeline {
       steps {
         script{
           try {
-            sh "az group delete -n prd-monitor-eastus-crashcourse -y"
+            sh """
+              cd ./monitor/
+              sudo terraform init --get=true
+              sudo terraform plan -out=monitor.out -no-color
+              sudo terraform apply -no-color monitor.out
+              cp terraform.tfstate ~/workspace/tfstates/tfstate3
+            """
           } catch (Exception err){
-            echo 'Failed to delete old infrastructure'
+            try {
+              sh """
+                cd ./monitor/
+                sudo cp ~/workspace/tfstates/tfstate3 ./terraform.tfstate
+                sudo chmod 664 ./terraform.tfstate
+                sudo terraform plan -out=monitor.out -no-color
+                sudo terraform apply -no-color monitor.out
+                cp terraform.tfstate ~/workspace/tfstates/tfstate3
+              """
+            } catch (Exception err){
+              throw er
+            }
           }
-          sh """
-            cd ./monitor/
-            sudo terraform init --get=true
-            sudo terraform plan -out=monitor.out -no-color
-            sudo terraform apply -no-color monitor.out
-          """
         }
       }
     }
