@@ -81,7 +81,7 @@ resource "azurerm_monitor_metric_alert" "cpu-vm0" {
 resource "azurerm_monitor_metric_alert" "cpu-vm1" {
   name                = "percentage-cpu-vm1-greater75"
   resource_group_name = azurerm_resource_group.my-group.name
-  scopes              = ["/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm1-eastus-crashcourse"]
+  scopes              = ["/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm1-eastus-crashcourse"]
   description         = "Action will be triggered when Percentage CPU is greater than 75."
   severity            = "2"
 
@@ -101,7 +101,7 @@ resource "azurerm_monitor_metric_alert" "cpu-vm1" {
 resource "azurerm_monitor_metric_alert" "cpu-vm2" {
   name                = "percentage-cpu-vm2-greater75"
   resource_group_name = azurerm_resource_group.my-group.name
-  scopes              = ["/subscriptions/4babd177-0562-4618-bea7-ef8309d73965/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm2-eastus-crashcourse"]
+  scopes              = ["/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm2-eastus-crashcourse"]
   description         = "Action will be triggered when Percentage CPU is greater than 75."
   severity            = "2"
 
