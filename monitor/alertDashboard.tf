@@ -17,7 +17,7 @@ resource "azurerm_resource_group" "my-group" {
 
 
 resource "azurerm_monitor_action_group" "main" {
-  name                = "prd-monitor-ag-eastus-crashcourse"
+  name                = "prd-monitor-act-group-eastus-crashcourse"
   resource_group_name = azurerm_resource_group.my-group.name
   short_name          = "slack-ag"
 
