@@ -65,7 +65,7 @@ pipeline {
                 sudo terraform apply -no-color monitor.out
                 cp terraform.tfstate ~/workspace/tfstates/tfstate3
               """
-            } catch (Exception err){
+            } catch (Exception er){
               throw er
             }
           }
