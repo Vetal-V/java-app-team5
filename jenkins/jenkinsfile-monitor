@@ -17,6 +17,7 @@ pipeline {
     stage('Prepare terraform') {
       steps {
         sh "git checkout '${TARGET_BRANCH_NAME}'"
+        sudo rm -rf ~/workspace/pl3-dashboard-alerts/monitor/.terraform
         deleteDir()
         checkout scm
         deleteDir()
