@@ -1,0 +1,58 @@
+#!/usr/bin/env groovy
+properties([disableConcurrentBuilds()])
+
+TARGET_BRANCH_NAME = "monitor"
+
+pipeline {
+  agent {
+    label 'ubuntu'
+  }
+
+  options {
+    timestamps()
+  }
+
+
+  stages {
+    stage('Prepare terraform') {
+      steps {
+        sh "git checkout '${TARGET_BRANCH_NAME}'"
+        deleteDir() // Clean up the workspace
+        checkout scm
+        withCredentials([string(credentialsId: 'email-dev1', variable: 'email1')]) {
+          withCredentials([string(credentialsId: 'email-dev2', variable: 'email2')]) {
+            withCredentials([string(credentialsId: 'email-dev3', variable: 'email3')]) {
+              withCredentials([string(credentialsId: 'email-dev4', variable: 'email4')]) {
+                withCredentials([string(credentialsId: 'email-dev4', variable: 'email5')]) {
+                  withCredentials([string(credentialsId: 'sub-id-azure', variable: 'sub-id')]) {
+                    sh """
+                      cd ./monitor
+                      sed -i "s/somemail1/$email1/" alertDashboard.tf
+                      sed -i "s/somemail2/$email2/" alertDashboard.tf
+                      sed -i "s/somemail3/$email3/" alertDashboard.tf
+                      sed -i "s/somemail4/$email4/" alertDashboard.tf
+                      sed -i "s/somemail5/$email5/" alertDashboard.tf
+                      sed -i "s/00000000-0000-0000-0000-000000000000/$sub-id/" alertDashboard.tf
+                    """
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    stage('Run monitor') {
+      steps {
+        sh """
+          cd ./monitor/
+          sudo terraform init --get=true
+          sudo terraform plan -out=monitor.out -no-color
+          sudo terraform apply -no-color monitor.out
+        """
+      }
+    }
+  }
+
+}
