@@ -35,7 +35,7 @@ pipeline {
           sh 'sudo sed -i "s/somemail5/$email5/" ./monitor/alertDashboard.tf'
         }
         withCredentials([string(credentialsId: 'sub-id-azure', variable: 'sub-id')]) {
-          sh 'sudo sed -i "s/00000000-0000-0000-0000-000000000000/$sub-id/" alertDashboard.tf'
+          sh 'sudo sed -i "s/00000000-0000-0000-0000-000000000000/$sub-id/" ./monitor/alertDashboard.tf'
         }
         withCredentials([file(credentialsId: 'vm_variables', variable: 'monit_variables')]) {
           sh "sudo cp $monit_variables ./monitor/variables.tf"
@@ -46,12 +46,19 @@ pipeline {
 
     stage('Run monitor') {
       steps {
-        sh """
-          cd ./monitor/
-          sudo terraform init --get=true
-          sudo terraform plan -out=monitor.out -no-color
-          sudo terraform apply -no-color monitor.out
-        """
+        script{
+          try {
+            sh "az group delete -n prd-monitor-eastus-crashcourse -y"
+          } catch (Exception err){
+            echo 'Failed to delete old infrastructure'
+          }
+          sh """
+            cd ./monitor/
+            sudo terraform init --get=true
+            sudo terraform plan -out=monitor.out -no-color
+            sudo terraform apply -no-color monitor.out
+          """
+        }
       }
     }
   }
