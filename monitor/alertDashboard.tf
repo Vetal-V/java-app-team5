@@ -27,31 +27,31 @@ resource "azurerm_monitor_action_group" "main" {
   }
 
   email_receiver {
-    name                    = "sendtodevops"
+    name                    = "sendtodevops1"
     email_address           = "somemail1"
     use_common_alert_schema = true
   }
 
   email_receiver {
-    name                    = "sendtodevops"
+    name                    = "sendtodevops2"
     email_address           = "somemail2"
     use_common_alert_schema = true
   }
 
   email_receiver {
-    name                    = "sendtodevops"
+    name                    = "sendtodevops3"
     email_address           = "somemail3"
     use_common_alert_schema = true
   }
 
   email_receiver {
-    name                    = "sendtodevops"
+    name                    = "sendtodevops4"
     email_address           = "somemail4"
     use_common_alert_schema = true
   }
 
   email_receiver {
-    name                    = "sendtodevops"
+    name                    = "sendtodevops5"
     email_address           = "somemail5"
     use_common_alert_schema = true
   }
