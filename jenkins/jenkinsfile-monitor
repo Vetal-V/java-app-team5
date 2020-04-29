@@ -16,7 +16,9 @@ pipeline {
   stages {
     stage('Prepare terraform') {
       steps {
+        deleteDir()
         sh "git checkout '${TARGET_BRANCH_NAME}'"
+        deleteDir()
         deleteDir() // Clean up the workspace
         checkout scm
         withCredentials([string(credentialsId: 'email-dev1', variable: 'email1')]) {
