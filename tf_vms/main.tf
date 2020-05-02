@@ -1,4 +1,3 @@
-# By VovaPfaifer for Dev-ops team5
 #terrafor code to make Resorce group .. vm
 # Configure the Microsoft Azure Provider
 provider "azurerm" {
