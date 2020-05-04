@@ -68,23 +68,3 @@
       state: started
       enabled: true
       daemon_reload: true
-
-  - name: Copy war file to webapps Tomcat
-    copy:
-      src: ./tomcat.war
-      dest: /opt/tomcat/webapps/tomcat.war
-      owner: tomcat
-      group: tomcat
-      mode: 0644
-
-  - name: Unzip app to webapps Tomcat
-    shell:
-      cmd: jar -xvf tomcat.war
-      chdir: /opt/tomcat/webapps/
-
-# Setup
-# ansible-playbook -i hosts tomcat.yml
-# generate ssh key on remote machines
-# ssh -i ~/.ssh/filename.pub ubuntu@x.x.x.x
-# checking 
-# sudo systemctl status tomcat

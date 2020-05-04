@@ -76,40 +76,18 @@ pipeline {
       }
     }
 
-    stage('Build artifact') {
-      steps {
-        withCredentials([usernamePassword(credentialsId: 'db_loginpass', usernameVariable: 'LOGIN_DB2', passwordVariable: 'PASSWORD_DB2')]) {
-          sh """
-            cp ./scripts/replacement.sh ./app/WEB-INF/
-            cd ./app/WEB-INF/
-            sed -i "s/LOGINVALUE/$LOGIN_DB2/" replacement.sh
-            sed -i "s/PASSWORDVALUE/$PASSWORD_DB2/" replacement.sh
-            ./replacement.sh
-            rm ./replacement.sh
-          """
-        }
-        sh """
-          cd ./app/
-          sed -i "s/You Don't have an account?/VM1 You Don't have an account?/" index.jsp
-        """
-        sh "jar -cvf tomcat.war ./app/"
-        sh "cp tomcat.war ./ansible_tomcat/tomcat.war"
-      }
-    }
-
     stage('Run ansible playbook') {
       steps {
         withCredentials([usernamePassword(credentialsId: 'vms_loginpass', usernameVariable: 'LOGIN', passwordVariable: 'PASSWORD')]) {
           sh """
+            cd ./app/
+            sed -i "s/You Don't have an account?/VM1 You Don't have an account?/" index.jsp
             cd ./ansible_tomcat/
             ansible-playbook -i hosts tomcat.yml
-            sudo rm tomcat.war
             echo "[team5]" > hosts && echo "${IP_ADDRESS_VM2} ansible_user=$LOGIN ansible_password=$PASSWORD" >> hosts
             cd ../app/
             sed -i "s/VM1 You Don't have an account?/VM2 You Don't have an account?/" index.jsp
-            cd .. && jar -cvf tomcat.war ./app/
-            cp tomcat.war ./ansible_tomcat/tomcat.war
-            cd ./ansible_tomcat/
+            cd ../ansible_tomcat/
             ansible-playbook -i hosts tomcat.yml
           """
         }
@@ -137,7 +115,7 @@ pipeline {
   }
   post {
     success {
-      slackSend(color: '#00FF00', message: "SUCCESS: Pipeline2 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). The environment was successfully configured. Visit website: http://${IP_ADDRESS_HAPROXY}/app")
+      slackSend(color: '#00FF00', message: "SUCCESS: Pipeline2 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). The environment was successfully configured.")
     }
 
     failure {
