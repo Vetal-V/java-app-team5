@@ -12,7 +12,7 @@
     <div class="main-content">
       <center>
         <%
-        if(session.getAttribute("login")==null || session.getAttribute("login")==" ") //check condition unauthorize user not direct access welcome.jsp page
+        if(session.getAttribute("login")!==null || session.getAttribute("login")!==" ") //check condition unauthorize user not direct access welcome.jsp page
         {
           response.sendRedirect("index.jsp"); 
         }
