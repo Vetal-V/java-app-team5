@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 properties([disableConcurrentBuilds()])
 
-TARGET_BRANCH_NAME = "master"
+TARGET_BRANCH_NAME = "patch-2"
 
 pipeline {
     agent {
@@ -52,7 +52,7 @@ pipeline {
                         cd ./ansible_tomcat/
                         echo "[team5]" > hosts && echo "${IP_ADDRESS_VM1} ansible_user=$LOGIN ansible_password=$PASSWORD" >> hosts
                         echo "${IP_ADDRESS_VM2} ansible_user=$LOGIN ansible_password=$PASSWORD" >> hosts
-                        ansible-playbook -i hosts app-deploy.yml
+                        sudo ansible-playbook -i hosts app-deploy.yml
                     """
                 }
             }
@@ -64,7 +64,7 @@ pipeline {
         }
 
         failure {
-            slackSend(color: '#FF0000', message: "FAILED: Pipeline3 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}).  New version of app was not deployed.")
+            slackSend(color: '#FF0000', message: "FAILED: Pipeline3 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). New version of app was not deployed.")
         }
     }
 }
