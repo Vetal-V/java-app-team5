@@ -19,6 +19,10 @@ pipeline {
     stages {
         stage('Build artifact') {
             steps {
+                sh "git checkout '${TARGET_BRANCH_NAME}'"
+                sh "ansible --version"
+                deleteDir() // Clean up the workspace
+                checkout scm
                 script {
                     IP_ADDRESS_VM1 = sh (script: 'az vm show -d -g prd-vm-rg-eastus-crashcourse  -n prd-vm0-eastus-crashcourse  --query publicIps -o tsv', returnStdout: true)
                     IP_ADDRESS_VM1 = IP_ADDRESS_VM1.substring(0, IP_ADDRESS_VM1.length()-1)
@@ -39,11 +43,13 @@ pipeline {
         }
 
         stage('Deploy new version of app') {
-            sh """
-                cd ./ansible_tomcat/
-                echo "[team5]" > hosts && echo "${IP_ADDRESS_VM1} ansible_user=$LOGIN ansible_password=$PASSWORD" >> hosts
-                ansible-playbook -i hosts app-deploy.yml
-            """
+            steps {
+                sh """
+                    cd ./ansible_tomcat/
+                    echo "[team5]" > hosts && echo "${IP_ADDRESS_VM1} ansible_user=$LOGIN ansible_password=$PASSWORD" >> hosts
+                    ansible-playbook -i hosts app-deploy.yml
+                """
+            }
         }
     }
     post {
