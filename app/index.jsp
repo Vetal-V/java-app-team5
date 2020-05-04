@@ -47,7 +47,7 @@ try
       if(email.equals(dbemail) && password.equals(dbpassword))
       {
         session.setAttribute("login",dbemail); //session name is login and store fetchable database email address
-        response.setAttribute("Success, this user exists in our database"); // success logging
+        request.setAttribute("Success","your account exists in database"); // success logging
         response.sendRedirect("welcome.jsp"); //after login success redirect to welcome.jsp page
       }
     }
