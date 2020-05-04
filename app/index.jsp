@@ -47,8 +47,8 @@ try
       if(email.equals(dbemail) && password.equals(dbpassword))
       {
         session.setAttribute("login",dbemail); //session name is login and store fetchable database email address
-        request.setAttribute("errorMsg","your account exists in database"); // success logging
         response.sendRedirect("welcome.jsp"); //after login success redirect to welcome.jsp page
+        request.setAttribute("coolMsg","Success logging, your account exists in database"); // success logging
       }
     }
     else
@@ -108,6 +108,11 @@ catch(Exception e)
                     </div>
                     <p style="color:red">				   		
                     <%
+                     if(request.getAttribute("coolMsg")!=null)
+                    {
+                      out.println(request.getAttribute("coolMsg")); //Success logging 
+                    } 
+                    
                     if(request.getAttribute("errorMsg")!=null)
                     {
                       out.println(request.getAttribute("errorMsg")); //error message for email or password 
