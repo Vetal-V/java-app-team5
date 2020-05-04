@@ -82,7 +82,7 @@ pipeline {
           sh """
             cd ./app/
             sed -i "s/You Don't have an account?/VM1 You Don't have an account?/" index.jsp
-            cd ./ansible_tomcat/
+            cd ../ansible_tomcat/
             ansible-playbook -i hosts tomcat.yml
             echo "[team5]" > hosts && echo "${IP_ADDRESS_VM2} ansible_user=$LOGIN ansible_password=$PASSWORD" >> hosts
             cd ../app/
