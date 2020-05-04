@@ -15,6 +15,7 @@ pipeline {
     environment {
         IP_ADDRESS_VM1 = ''
         IP_ADDRESS_VM2 = ''
+        IP_ADDRESS_HAPROXY = ''
     }
 
     stages {
@@ -29,6 +30,8 @@ pipeline {
                     IP_ADDRESS_VM1 = IP_ADDRESS_VM1.substring(0, IP_ADDRESS_VM1.length()-1)
                     IP_ADDRESS_VM2 = sh (script: 'az vm show -d -g prd-vm-rg-eastus-crashcourse  -n prd-vm1-eastus-crashcourse  --query publicIps -o tsv', returnStdout: true)
                     IP_ADDRESS_VM2 = IP_ADDRESS_VM2.substring(0, IP_ADDRESS_VM2.length()-1)
+                    IP_ADDRESS_HAPROXY = sh (script: 'az vm show -d -g prd-vm-rg-eastus-crashcourse  -n prd-vm2-eastus-crashcourse  --query publicIps -o tsv', returnStdout: true)
+                    IP_ADDRESS_HAPROXY = IP_ADDRESS_HAPROXY.substring(0, IP_ADDRESS_HAPROXY.length()-1)
                 }
                 withCredentials([usernamePassword(credentialsId: 'db_loginpass', usernameVariable: 'LOGIN_DB2', passwordVariable: 'PASSWORD_DB2')]) {
                     sh """
