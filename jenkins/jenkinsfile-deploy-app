@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 properties([disableConcurrentBuilds()])
 
-TARGET_BRANCH_NAME = "patch-2"
+TARGET_BRANCH_NAME = "master"
 
 pipeline {
     agent {
