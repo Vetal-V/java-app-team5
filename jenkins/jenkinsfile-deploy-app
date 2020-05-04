@@ -1,0 +1,73 @@
+#!/usr/bin/env groovy
+properties([disableConcurrentBuilds()])
+
+TARGET_BRANCH_NAME = "master"
+
+pipeline {
+    agent {
+        label 'ubuntu'
+    }
+
+    options {
+        timestamps()
+    }
+
+    environment {
+        IP_ADDRESS_VM1 = ''
+        IP_ADDRESS_VM2 = ''
+        IP_ADDRESS_HAPROXY = ''
+    }
+
+    stages {
+        stage('Build artifact') {
+            steps {
+                sh "git checkout '${TARGET_BRANCH_NAME}'"
+                sh "ansible --version"
+                deleteDir() // Clean up the workspace
+                checkout scm
+                script {
+                    IP_ADDRESS_VM1 = sh (script: 'az vm show -d -g prd-vm-rg-eastus-crashcourse  -n prd-vm0-eastus-crashcourse  --query publicIps -o tsv', returnStdout: true)
+                    IP_ADDRESS_VM1 = IP_ADDRESS_VM1.substring(0, IP_ADDRESS_VM1.length()-1)
+                    IP_ADDRESS_VM2 = sh (script: 'az vm show -d -g prd-vm-rg-eastus-crashcourse  -n prd-vm1-eastus-crashcourse  --query publicIps -o tsv', returnStdout: true)
+                    IP_ADDRESS_VM2 = IP_ADDRESS_VM2.substring(0, IP_ADDRESS_VM2.length()-1)
+                    IP_ADDRESS_HAPROXY = sh (script: 'az vm show -d -g prd-vm-rg-eastus-crashcourse  -n prd-vm2-eastus-crashcourse  --query publicIps -o tsv', returnStdout: true)
+                    IP_ADDRESS_HAPROXY = IP_ADDRESS_HAPROXY.substring(0, IP_ADDRESS_HAPROXY.length()-1)
+                }
+                withCredentials([usernamePassword(credentialsId: 'db_loginpass', usernameVariable: 'LOGIN_DB2', passwordVariable: 'PASSWORD_DB2')]) {
+                    sh """
+                        cp ./scripts/replacement.sh ./app/WEB-INF/
+                        cd ./app/WEB-INF/
+                        sed -i "s/LOGINVALUE/$LOGIN_DB2/" replacement.sh
+                        sed -i "s/PASSWORDVALUE/$PASSWORD_DB2/" replacement.sh
+                        ./replacement.sh
+                        rm ./replacement.sh
+                    """
+                }
+                sh "jar -cvf tomcat.war ./app/"
+                sh "cp tomcat.war ./ansible_tomcat/tomcat.war"
+            }
+        }
+
+        stage('Deploy new version of app') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'vms_loginpass', usernameVariable: 'LOGIN', passwordVariable: 'PASSWORD')]) {
+                    sh """
+                        cd ./ansible_tomcat/
+                        echo "[team5]" > hosts && echo "${IP_ADDRESS_VM1} ansible_user=$LOGIN ansible_password=$PASSWORD" >> hosts
+                        echo "${IP_ADDRESS_VM2} ansible_user=$LOGIN ansible_password=$PASSWORD" >> hosts
+                        sudo ansible-playbook -i hosts app-deploy.yml
+                    """
+                }
+            }
+        }
+    }
+    post {
+        success {
+            slackSend(color: '#00FF00', message: "SUCCESS: Pipeline3 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). New version of app was deployed. Visit website: http://${IP_ADDRESS_HAPROXY}/app")
+        }
+
+        failure {
+            slackSend(color: '#FF0000', message: "FAILED: Pipeline3 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). New version of app was not deployed.")
+        }
+    }
+}

@@ -1,0 +1,19 @@
+- hosts: all
+
+  become: yes
+  become_method: sudo
+  remote_user: ubuntu
+
+  tasks:
+    - name: Copy war file to webapps Tomcat
+      copy:
+        src: ./tomcat.war
+        dest: /opt/tomcat/webapps/tomcat.war
+        owner: tomcat
+        group: tomcat
+        mode: 0644
+
+    - name: Unzip app to webapps Tomcat
+      shell:
+        cmd: jar -xvf tomcat.war
+        chdir: /opt/tomcat/webapps/
