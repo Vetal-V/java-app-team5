@@ -14,6 +14,7 @@ pipeline {
 
     environment {
         IP_ADDRESS_VM1 = ''
+        IP_ADDRESS_VM2 = ''
     }
 
     stages {
@@ -26,6 +27,8 @@ pipeline {
                 script {
                     IP_ADDRESS_VM1 = sh (script: 'az vm show -d -g prd-vm-rg-eastus-crashcourse  -n prd-vm0-eastus-crashcourse  --query publicIps -o tsv', returnStdout: true)
                     IP_ADDRESS_VM1 = IP_ADDRESS_VM1.substring(0, IP_ADDRESS_VM1.length()-1)
+                    IP_ADDRESS_VM2 = sh (script: 'az vm show -d -g prd-vm-rg-eastus-crashcourse  -n prd-vm1-eastus-crashcourse  --query publicIps -o tsv', returnStdout: true)
+                    IP_ADDRESS_VM2 = IP_ADDRESS_VM2.substring(0, IP_ADDRESS_VM2.length()-1)
                 }
                 withCredentials([usernamePassword(credentialsId: 'db_loginpass', usernameVariable: 'LOGIN_DB2', passwordVariable: 'PASSWORD_DB2')]) {
                     sh """
@@ -44,11 +47,14 @@ pipeline {
 
         stage('Deploy new version of app') {
             steps {
-                sh """
-                    cd ./ansible_tomcat/
-                    echo "[team5]" > hosts && echo "${IP_ADDRESS_VM1} ansible_user=$LOGIN ansible_password=$PASSWORD" >> hosts
-                    ansible-playbook -i hosts app-deploy.yml
-                """
+                withCredentials([usernamePassword(credentialsId: 'vms_loginpass', usernameVariable: 'LOGIN', passwordVariable: 'PASSWORD')]) {
+                    sh """
+                        cd ./ansible_tomcat/
+                        echo "[team5]" > hosts && echo "${IP_ADDRESS_VM1} ansible_user=$LOGIN ansible_password=$PASSWORD" >> hosts
+                        echo "${IP_ADDRESS_VM2} ansible_user=$LOGIN ansible_password=$PASSWORD" >> hosts
+                        ansible-playbook -i hosts app-deploy.yml
+                    """
+                }
             }
         }
     }
