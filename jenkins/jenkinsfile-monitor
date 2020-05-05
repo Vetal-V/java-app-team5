@@ -92,11 +92,11 @@ pipeline {
   }
   post {
     success {
-      slackSend(color: '#00FF00', message: "SUCCESS: Pipeline3 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). Dashboard and alerts were successfully created.")
+      slackSend(color: '#00FF00', message: "SUCCESS: Pipeline4 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). Dashboard and alerts were successfully created.")
     }
 
     failure {
-      slackSend(color: '#FF0000', message: "FAILED: Pipeline3 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). Dashboard and alerts were not created.")
+      slackSend(color: '#FF0000', message: "FAILED: Pipeline4 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). Dashboard and alerts were not created.")
     }
   }
 }
