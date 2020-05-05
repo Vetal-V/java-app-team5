@@ -115,7 +115,7 @@ resource "azurerm_monitor_metric_alert" "cpu-vm2" {
 resource "azurerm_dashboard" "my-board" {
   name                = "prd-dashboard-eastus-crashcourse"
   resource_group_name = "prd-vm-rg-eastus-crashcourse"
-  location            = azurerm_resource_group.my-group.location
+  location            = "eastus"
   tags = {
     source = "terraform"
   }
