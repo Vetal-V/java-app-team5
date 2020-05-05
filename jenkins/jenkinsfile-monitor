@@ -17,11 +17,15 @@ pipeline {
     stage('Prepare terraform') {
       steps {
         sh "git checkout '${TARGET_BRANCH_NAME}'"
-        sh "sudo rm -rf ~/workspace/pl3-dashboard-alerts/monitor/.terraform"
         deleteDir()
         checkout scm
-        deleteDir()
-        checkout scm
+        script {
+          try {
+            sh "sudo rm -rf ~/workspace/pl3-dashboard-alerts/monitor/.terraform"
+          } catch (Exception error) {
+            echo "Failed to delete old .terraform state."
+          }
+        }
         withCredentials([string(credentialsId: 'email-dev1', variable: 'email1')]) {
           sh 'sudo sed -i "s/somemail1/$email1/" ./monitor/alertDashboard.tf'
         }
