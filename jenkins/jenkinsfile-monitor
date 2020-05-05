@@ -21,7 +21,7 @@ pipeline {
         checkout scm
         script {
           try {
-            sh "sudo rm -rf ~/workspace/pl3-dashboard-alerts/monitor/.terraform"
+            sh "sudo rm -rf ~/workspace/pl4-dashboard-alerts/monitor/.terraform"
           } catch (Exception error) {
             echo "Failed to delete old .terraform state."
           }
