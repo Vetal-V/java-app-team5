@@ -10,15 +10,9 @@ provider "azurerm" {
   tenant_id       = var.TENANT_ID
 }
 
-resource "azurerm_resource_group" "my-group" {
-  name     = "prd-monitor-eastus-crashcourse"
-  location = "eastus"
-}
-
-
 resource "azurerm_monitor_action_group" "main" {
   name                = "prd-monitor-act-group-eastus-crashcourse"
-  resource_group_name = azurerm_resource_group.my-group.name
+  resource_group_name = "prd-vm-rg-eastus-crashcourse"
   short_name          = "slack-ag"
 
   webhook_receiver {
@@ -60,7 +54,7 @@ resource "azurerm_monitor_action_group" "main" {
 
 resource "azurerm_monitor_metric_alert" "cpu-vm0" {
   name                = "percentage-cpu-vm0-greater75"
-  resource_group_name = azurerm_resource_group.my-group.name
+  resource_group_name = "prd-vm-rg-eastus-crashcourse"
   scopes              = ["/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm0-eastus-crashcourse"]
   description         = "Action will be triggered when Percentage CPU is greater than 75."
   severity            = "2"
@@ -80,7 +74,7 @@ resource "azurerm_monitor_metric_alert" "cpu-vm0" {
 
 resource "azurerm_monitor_metric_alert" "cpu-vm1" {
   name                = "percentage-cpu-vm1-greater75"
-  resource_group_name = azurerm_resource_group.my-group.name
+  resource_group_name = "prd-vm-rg-eastus-crashcourse"
   scopes              = ["/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm1-eastus-crashcourse"]
   description         = "Action will be triggered when Percentage CPU is greater than 75."
   severity            = "2"
@@ -100,7 +94,7 @@ resource "azurerm_monitor_metric_alert" "cpu-vm1" {
 
 resource "azurerm_monitor_metric_alert" "cpu-vm2" {
   name                = "percentage-cpu-vm2-greater75"
-  resource_group_name = azurerm_resource_group.my-group.name
+  resource_group_name = "prd-vm-rg-eastus-crashcourse"
   scopes              = ["/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/prd-vm-rg-eastus-crashcourse/providers/Microsoft.Compute/virtualMachines/prd-vm2-eastus-crashcourse"]
   description         = "Action will be triggered when Percentage CPU is greater than 75."
   severity            = "2"
@@ -120,7 +114,7 @@ resource "azurerm_monitor_metric_alert" "cpu-vm2" {
 
 resource "azurerm_dashboard" "my-board" {
   name                = "prd-dashboard-eastus-crashcourse"
-  resource_group_name = azurerm_resource_group.my-group.name
+  resource_group_name = "prd-vm-rg-eastus-crashcourse"
   location            = azurerm_resource_group.my-group.location
   tags = {
     source = "terraform"

@@ -20,9 +20,14 @@ pipeline {
         deleteDir()
         checkout scm
         script {
+          try{
+            deleteDir()
+          } catch(Exception error1){
+            echo "Failed to delete directory."
+          }
           try {
             sh "sudo rm -rf ~/workspace/pl4-dashboard-alerts/monitor/.terraform"
-          } catch (Exception error) {
+          } catch (Exception error2) {
             echo "Failed to delete old .terraform state."
           }
         }
@@ -62,7 +67,7 @@ pipeline {
               sudo terraform apply -no-color monitor.out
               cp terraform.tfstate ~/workspace/tfstates/tfstate3
             """
-          } catch (Exception err){
+          } catch (Exception error3){
             try {
               sh """
                 cd ./monitor/
@@ -72,9 +77,14 @@ pipeline {
                 sudo terraform apply -no-color monitor.out
                 cp terraform.tfstate ~/workspace/tfstates/tfstate3
               """
-            } catch (Exception er){
+            } catch (Exception error4){
               throw er
             }
+          }
+          try {
+            sh "sudo rm -rf ~/workspace/pl4-dashboard-alerts/monitor/.terraform"
+          } catch (Exception error5) {
+            echo "Failed to delete old .terraform state."
           }
         }
       }
@@ -82,11 +92,11 @@ pipeline {
   }
   post {
     success {
-      slackSend(color: '#00FF00', message: "SUCCESS: Pipeline3 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). Dashboard and alerts were successfully created.")
+      slackSend(color: '#00FF00', message: "SUCCESS: Pipeline4 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). Dashboard and alerts were successfully created.")
     }
 
     failure {
-      slackSend(color: '#FF0000', message: "FAILED: Pipeline3 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). Dashboard and alerts were not created.")
+      slackSend(color: '#FF0000', message: "FAILED: Pipeline4 '${env.JOB_NAME}.[${env.BUILD_NUMBER}]':(${env.JOB_DISPLAY_URL}). Dashboard and alerts were not created.")
     }
   }
 }
